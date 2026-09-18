@@ -11,7 +11,7 @@
     "preview": "ceru-plugin preview dist/plugin.js"
   },
   "dependencies": {
-    "@shiqianjiang/ceru-plugin-sdk": "^0.2.1"
+    "@shiqianjiang/ceru-plugin-sdk": "^0.2.2"
   },
   "devDependencies": {
     "@shiqianjiang/ceru-plugin-cli": "^0.2.4",

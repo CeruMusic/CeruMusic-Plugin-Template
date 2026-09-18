@@ -1,6 +1,6 @@
 import { definePlugin } from '@shiqianjiang/ceru-plugin-sdk'
 
-/** @typedef {typeof import('./plugin.config.js').default} PluginConfig */
+/** @typedef {import('@ceru/plugin-config').PluginConfig} PluginConfig */
 
 // 本地演示数据。请在接入真实音源时声明所需的网络权限。
 const tracks = [

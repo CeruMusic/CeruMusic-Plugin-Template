@@ -21,12 +21,10 @@ npm run dev
 
 CLI 是可选开发工具。无需 npm 的 [手写单文件示例](examples/handwritten/plugin.js) 直接使用 `exports.manifest`、`exports.activate`、`exports.surfaces` 与宿主 `require()` 模块，也能被同一个 v2 Core 安装运行。需要第三方包时，可使用 Ceru CLI 或任意 bundler 将它打入最终 JS；Core 不读取 `node_modules`。
 
-项目配置可以直接写在 `ceru.plugin.json` 的 `config` 中，也可以用
-`"config": "@./src/plugin.config.ts"` 引入 JSON/JS/TS 配置模块。引用会在构建期展开为
-`exports.config = { ... }`，插件通过有类型的 `ctx.config` 读取；后端个性化发行可用
+项目配置直接写在 `ceru.plugin.json` 的 `config` 对象中，构建后位于
+`exports.manifest.config`。插件通过有类型的 `ctx.config` 读取；后端个性化发行可用
 Issuer 的 `personalization.config` 覆盖默认值，无需改写业务 bundle。
-dev/build 还会生成不含配置值的 `@ceru/plugin-config` 类型声明，因此内联配置和
-`@文件` 配置都能在 TypeScript/JSDoc 中获得字段补全。
+dev/build 还会生成不含配置值的 `@ceru/plugin-config` 类型声明，供 TypeScript/JSDoc 补全。
 
 ## 模板目录
 

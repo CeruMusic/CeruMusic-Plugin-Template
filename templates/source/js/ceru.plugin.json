@@ -52,7 +52,16 @@
       "state": 1
     }
   },
-  "config": "@./src/plugin.config.js",
+  "config": {
+    "displayName": "Ceru Demo",
+    "apiOrigin": "https://music.example.com",
+    "sources": {
+      "demo": {
+        "name": "Demo Source",
+        "qualities": ["320k", "flac"]
+      }
+    }
+  },
   "entries": {
     "logic.main": "src/index.js"
   },
