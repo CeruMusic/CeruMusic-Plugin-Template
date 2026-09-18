@@ -1,0 +1,11 @@
+#app {
+  padding: 28px;
+  font: 16px system-ui;
+  color: #173b28;
+}
+button {
+  padding: 10px 16px;
+  background: #a6dfb7;
+  border: 0;
+  border-radius: 8px;
+}

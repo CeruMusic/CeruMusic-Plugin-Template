@@ -1,0 +1,95 @@
+{
+  "manifest": {
+    "manifestVersion": 2,
+    "id": "local.js",
+    "name": "js",
+    "version": "0.1.0",
+    "description": "A Ceru Music v2 guest-adapter plugin",
+    "engines": {
+      "hostApi": "^2.0.0",
+      "logicRuntime": "ceru-js@1",
+      "uiSchema": "^1.0.0"
+    },
+    "modules": {
+      "logic": {
+        "entry": "logic.main",
+        "activation": ["onCommand:hello"]
+      },
+      "surfaces": [
+        {
+          "id": "settings",
+          "kind": "schema",
+          "entry": "schema.settings"
+        }
+      ]
+    },
+    "contributes": {
+      "commands": [
+        {
+          "id": "hello",
+          "title": "Hello",
+          "action": "hello"
+        }
+      ],
+      "settingsPages": [
+        {
+          "id": "settings",
+          "title": "插件设置",
+          "view": "settings"
+        }
+      ],
+      "guestAdapters": [
+        {
+          "id": "example-script",
+          "format": "example-script",
+          "compatibilityProfile": "basic@1",
+          "bootstrap": "guest.bootstrap",
+          "runtime": "ceru-js@1",
+          "projectableProtocols": ["music.resolve@1"]
+        }
+      ]
+    },
+    "permissions": [
+      {
+        "key": "guest-manage",
+        "name": "guests.manage",
+        "scope": {
+          "parent": "self"
+        },
+        "reason": "管理用户批准的子插件",
+        "optional": true
+      },
+      {
+        "key": "guest-run",
+        "name": "guests.run",
+        "scope": {
+          "parent": "self"
+        },
+        "reason": "运行已批准的子插件",
+        "optional": true
+      }
+    ],
+    "dataSchemas": {
+      "config": 1,
+      "state": 1
+    },
+    "guestPolicy": {
+      "maxDepth": 1,
+      "allowedCapabilities": ["network.request"],
+      "networkScopeMode": "per-guest-user-approved",
+      "allowNativeCode": false,
+      "allowRemoteCodeExecution": false
+    }
+  },
+  "entries": {
+    "logic.main": "src/index.js",
+    "guest.bootstrap": "src/guest.js"
+  },
+  "resources": {
+    "schema.settings": {
+      "path": "ui/settings.json",
+      "type": "json"
+    }
+  },
+  "output": "dist/plugin.js"
+}

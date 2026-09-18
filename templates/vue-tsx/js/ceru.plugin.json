@@ -1,0 +1,59 @@
+{
+  "manifest": {
+    "manifestVersion": 2,
+    "id": "local.js",
+    "name": "js",
+    "version": "0.1.0",
+    "description": "A Ceru Music v2 vue-tsx plugin",
+    "engines": {
+      "hostApi": "^2.0.0",
+      "logicRuntime": "ceru-js@1",
+      "uiSchema": "^1.0.0"
+    },
+    "modules": {
+      "logic": {
+        "entry": "logic.main",
+        "activation": ["onCommand:hello"]
+      },
+      "surfaces": [
+        {
+          "id": "page",
+          "kind": "web",
+          "entry": "view.main"
+        }
+      ]
+    },
+    "contributes": {
+      "commands": [
+        {
+          "id": "hello",
+          "title": "Hello",
+          "action": "hello"
+        }
+      ],
+      "sidebarItems": [
+        {
+          "id": "page",
+          "group": "library",
+          "title": "js",
+          "view": "page"
+        }
+      ]
+    },
+    "permissions": [],
+    "dataSchemas": {
+      "config": 1,
+      "state": 1
+    }
+  },
+  "entries": {
+    "logic.main": "src/index.js",
+    "view.main": "src/view.js"
+  },
+  "resources": {},
+  "output": "dist/plugin.js",
+  "framework": "vue",
+  "sharedLibraries": {
+    "vue": "^3.5.43"
+  }
+}

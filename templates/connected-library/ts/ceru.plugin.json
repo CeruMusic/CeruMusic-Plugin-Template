@@ -1,0 +1,76 @@
+{
+  "manifest": {
+    "manifestVersion": 2,
+    "id": "local.ts",
+    "name": "ts",
+    "version": "0.1.0",
+    "description": "A Ceru Music v2 connected-library plugin",
+    "engines": {
+      "hostApi": "^2.0.0",
+      "logicRuntime": "ceru-js@1",
+      "uiSchema": "^1.0.0"
+    },
+    "modules": {
+      "logic": {
+        "entry": "logic.main",
+        "activation": ["onCommand:hello", "onProvider:catalog"]
+      },
+      "surfaces": [
+        {
+          "id": "settings",
+          "kind": "schema",
+          "entry": "schema.settings"
+        }
+      ]
+    },
+    "contributes": {
+      "commands": [
+        {
+          "id": "hello",
+          "title": "Hello",
+          "action": "hello"
+        },
+        {
+          "id": "connect",
+          "title": "演示连接",
+          "action": "connection.connect",
+          "view": "settings"
+        }
+      ],
+      "providers": [
+        {
+          "id": "catalog",
+          "name": "ts",
+          "protocols": ["music.search@1", "music.resolve@1"],
+          "icon": {
+            "kind": "host",
+            "name": "music-note"
+          },
+          "connectionMode": "multiple"
+        }
+      ],
+      "settingsPages": [
+        {
+          "id": "settings",
+          "title": "插件设置",
+          "view": "settings"
+        }
+      ]
+    },
+    "permissions": [],
+    "dataSchemas": {
+      "config": 1,
+      "state": 1
+    }
+  },
+  "entries": {
+    "logic.main": "src/index.ts"
+  },
+  "resources": {
+    "schema.settings": {
+      "path": "ui/settings.json",
+      "type": "json"
+    }
+  },
+  "output": "dist/plugin.js"
+}

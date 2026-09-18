@@ -1,0 +1,26 @@
+name: 分享插件
+description: 介绍已经写好的插件或提交收录建议
+title: "[插件分享] "
+body:
+  - type: input
+    id: name
+    attributes:
+      label: 插件名称
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: 源码或发行地址
+    validations:
+      required: true
+  - type: textarea
+    id: features
+    attributes:
+      label: 功能、权限和兼容版本
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: 构建、静态校验及实际使用结果

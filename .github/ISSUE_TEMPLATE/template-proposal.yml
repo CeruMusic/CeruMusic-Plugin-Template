@@ -1,0 +1,16 @@
+name: 新模板提案
+description: 提议或贡献插件开发模板
+title: "[模板提案] "
+body:
+  - type: textarea
+    id: usecase
+    attributes:
+      label: 希望解决的开发场景
+    validations:
+      required: true
+  - type: textarea
+    id: design
+    attributes:
+      label: 框架、语言、demo 和验证方案
+    validations:
+      required: true

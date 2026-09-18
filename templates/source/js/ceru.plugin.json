@@ -1,0 +1,51 @@
+{
+  "manifest": {
+    "manifestVersion": 2,
+    "id": "local.js",
+    "name": "js",
+    "version": "0.1.0",
+    "description": "A Ceru Music v2 source plugin",
+    "engines": {
+      "hostApi": "^2.0.0",
+      "logicRuntime": "ceru-js@1",
+      "uiSchema": "^1.0.0"
+    },
+    "modules": {
+      "logic": {
+        "entry": "logic.main",
+        "activation": ["onCommand:hello", "onProvider:catalog"]
+      }
+    },
+    "contributes": {
+      "commands": [
+        {
+          "id": "hello",
+          "title": "Hello",
+          "action": "hello"
+        }
+      ],
+      "providers": [
+        {
+          "id": "catalog",
+          "name": "js",
+          "protocols": ["music.search@1", "music.resolve@1"],
+          "icon": {
+            "kind": "host",
+            "name": "music-note"
+          },
+          "connectionMode": "none"
+        }
+      ]
+    },
+    "permissions": [],
+    "dataSchemas": {
+      "config": 1,
+      "state": 1
+    }
+  },
+  "entries": {
+    "logic.main": "src/index.js"
+  },
+  "resources": {},
+  "output": "dist/plugin.js"
+}

@@ -1,0 +1,30 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch Ceru plugin",
+      "type": "pwa-chrome",
+      "request": "attach",
+      "port": 9223,
+      "preLaunchTask": "Ceru: dev",
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": true,
+      "sourceMapPathOverrides": {
+        "ceru:///*": "${workspaceFolder}/*"
+      },
+      "skipFiles": ["**/node_modules/**"]
+    },
+    {
+      "name": "Attach to Ceru plugin",
+      "type": "pwa-chrome",
+      "request": "attach",
+      "port": 9223,
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": true,
+      "sourceMapPathOverrides": {
+        "ceru:///*": "${workspaceFolder}/*"
+      },
+      "skipFiles": ["**/node_modules/**"]
+    }
+  ]
+}

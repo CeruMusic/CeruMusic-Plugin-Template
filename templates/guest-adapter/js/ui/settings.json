@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "1.0",
+  "id": "settings",
+  "root": {
+    "type": "section",
+    "title": "插件设置",
+    "children": [
+      {
+        "type": "text",
+        "text": "请在 src/index.js 中实现你的服务逻辑。"
+      }
+    ]
+  }
+}

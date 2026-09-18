@@ -1,0 +1,55 @@
+{
+  "manifest": {
+    "manifestVersion": 2,
+    "id": "local.ts",
+    "name": "ts",
+    "version": "0.1.0",
+    "description": "A Ceru Music v2 web-surface plugin",
+    "engines": {
+      "hostApi": "^2.0.0",
+      "logicRuntime": "ceru-js@1",
+      "uiSchema": "^1.0.0"
+    },
+    "modules": {
+      "logic": {
+        "entry": "logic.main",
+        "activation": ["onCommand:hello"]
+      },
+      "surfaces": [
+        {
+          "id": "page",
+          "kind": "web",
+          "entry": "view.main"
+        }
+      ]
+    },
+    "contributes": {
+      "commands": [
+        {
+          "id": "hello",
+          "title": "Hello",
+          "action": "hello"
+        }
+      ],
+      "sidebarItems": [
+        {
+          "id": "page",
+          "group": "library",
+          "title": "ts",
+          "view": "page"
+        }
+      ]
+    },
+    "permissions": [],
+    "dataSchemas": {
+      "config": 1,
+      "state": 1
+    }
+  },
+  "entries": {
+    "logic.main": "src/index.ts",
+    "view.main": "src/view.ts"
+  },
+  "resources": {},
+  "output": "dist/plugin.js"
+}

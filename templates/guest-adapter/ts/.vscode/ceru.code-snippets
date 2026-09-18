@@ -1,0 +1,27 @@
+{
+  "Host platform icon": {
+    "prefix": "ceru-icon",
+    "body": [
+      "{ kind: 'host', name: 'platform.${1:tx}' }"
+    ],
+    "description": "使用宿主平台图标，无需打入插件"
+  },
+  "Host lodash": {
+    "prefix": "ceru-lodash",
+    "body": [
+      "ctx.utils.lodash.${1:uniqBy}(${2:items}, ${3:key})"
+    ],
+    "description": "调用宿主的带类型 Lodash 工具"
+  },
+  "Source rate limit": {
+    "prefix": "ceru-rate-limit",
+    "body": [
+      "return ctx.playback.failure({",
+      "  code: 'RATE_LIMITED',",
+      "  message: '${1:请稍后重试}',",
+      "  recovery: { mode: 'await-user', maxWaitMs: 60000 }",
+      "})"
+    ],
+    "description": "返回结构化限流结果，由 Host 决定换源与交互"
+  }
+}
