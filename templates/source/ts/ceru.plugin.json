@@ -35,6 +35,15 @@
           },
           "connectionMode": "none"
         }
+      ],
+      "homeSections": [
+        {
+          "id": "catalog-playlists",
+          "title": "歌单",
+          "kind": "playlists",
+          "icon": { "kind": "host", "name": "library" },
+          "providerIds": ["catalog"]
+        }
       ]
     },
     "permissions": [],

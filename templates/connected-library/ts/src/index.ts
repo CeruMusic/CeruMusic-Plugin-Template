@@ -28,11 +28,13 @@ export default definePlugin(async (ctx) => {
   })
 
   ctx.providers.register('catalog', {
-    async search() {
-      return { items: [] }
-    },
-    async resolve() {
-      return ctx.playback.failure({ code: 'UNSUPPORTED', message: '请接入真实音乐库 API' })
+    tracks: {
+      async search() {
+        return { items: [] }
+      },
+      async resolve() {
+        return ctx.playback.failure({ code: 'UNSUPPORTED', message: '请接入真实音乐库 API' })
+      },
     },
   })
 })

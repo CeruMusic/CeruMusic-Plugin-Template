@@ -14,33 +14,22 @@
       "logic": {
         "entry": "logic.main",
         "activation": ["onCommand:hello"]
-      },
-      "surfaces": [
-        {
-          "id": "settings",
-          "kind": "schema",
-          "entry": "schema.settings"
-        }
-      ]
+      }
     },
     "contributes": {
       "commands": [
         {
           "id": "hello",
-          "title": "Hello",
+          "title": "打开歌单导入",
           "action": "hello"
-        },
-        {
-          "id": "prepare-import",
-          "title": "预览导入",
-          "action": "import.prepare"
         }
       ],
-      "settingsPages": [
+      "playlistImporters": [
         {
-          "id": "settings",
-          "title": "导入预览",
-          "view": "settings"
+          "id": "text-list",
+          "title": "从文本清单导入（演示）",
+          "description": "复用宿主歌单导入窗口；每行一个标题",
+          "placeholder": "输入标题，以逗号分隔"
         }
       ]
     },
@@ -53,11 +42,6 @@
   "entries": {
     "logic.main": "src/index.js"
   },
-  "resources": {
-    "schema.settings": {
-      "path": "ui/settings.json",
-      "type": "json"
-    }
-  },
+  "resources": {},
   "output": "dist/plugin.js"
 }

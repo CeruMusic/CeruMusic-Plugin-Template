@@ -1,37 +1,31 @@
 import { definePlugin } from '@shiqianjiang/ceru-plugin-sdk'
 
-export default definePlugin(async (ctx) => {
-  await ctx.ui.setState('settings', {
-    titles: 'Morning Light, Night Walk, Morning Light',
-    preview: '尚未生成预览',
-  })
-  ctx.actions.register('hello', () => ctx.ui.openView('settings'))
-
-  ctx.actions.register('import.prepare', async (input) => {
-    const text =
-      input &&
-      typeof input === 'object' &&
-      !Array.isArray(input) &&
-      typeof input.titles === 'string'
-        ? input.titles
-        : ''
-    const titles = ctx.utils.lodash.uniq(
-      text
-        .split(/[,，\n]+/)
-        .map((title) => title.trim())
-        .filter(Boolean),
-    )
-    const plan = {
-      status: 'preview',
-      operation: 'append',
-      items: titles.map((title) => ({ title })),
-    }
-
-    // 这里只生成计划。真正写入歌单前，还需要 Host 批准目标和写入范围。
-    await ctx.ui.setState('settings', {
-      titles: text,
-      preview: '去重后共 ' + titles.length + ' 首：' + titles.join(' / '),
-    })
-    return plan
-  })
+export default definePlugin((ctx) => {
+  ctx.effects.add(
+    ctx.playlistImporters.register('text-list', {
+      async getTracks(request) {
+        // Demo metadata only. A real importer resolves platform links and returns track IDs.
+        const titles = ctx.utils.lodash.uniq(
+          request.value
+            .split(/[,，\n]+/)
+            .map((title) => title.trim())
+            .filter(Boolean),
+        )
+        return {
+          name: '文本清单',
+          items: titles.map((title) => ({
+            ref: { pluginId: ctx.plugin.id, providerId: 'text-list', kind: 'track', id: title },
+            title,
+            playable: false,
+            metadata: { artists: [] },
+            capabilities: [],
+          })),
+          totalEstimate: titles.length,
+        }
+      },
+    }),
+  )
+  ctx.effects.add(
+    ctx.actions.register('hello', () => ctx.ui.playlistImport.open({ importerId: 'text-list' })),
+  )
 })

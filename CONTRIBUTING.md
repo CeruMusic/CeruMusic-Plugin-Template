@@ -6,16 +6,16 @@
 
 创建 plugins/你的插件ID/，放入：
 
-~~~text
+```text
 plugins/example.author.plugin/
 ├── plugin.json
 ├── plugin.js
 └── README.md
-~~~
+```
 
 plugin.json 示例：
 
-~~~json
+```json
 {
   "id": "example.author.plugin",
   "name": "示例插件",
@@ -26,7 +26,7 @@ plugin.json 示例：
   "source": "https://github.com/example/plugin",
   "entry": "plugin.js"
 }
-~~~
+```
 
 也可以用 download 和 sha256 替代 entry，指向你自己发布的固定版本文件。URL 必须使用 HTTPS；sha256 必须是该文件的 64 位十六进制摘要。CI 只校验远端记录的格式，不自动下载或运行其内容。
 
@@ -59,10 +59,10 @@ README 应说明：
 
 ## 本地检查
 
-~~~bash
+```bash
 npm install --ignore-scripts
 npm test
-~~~
+```
 
 这只运行静态投稿检查，不执行成品插件。完整模板构建与 Electron demo 检查由工具链仓库提供。
 

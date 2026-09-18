@@ -38,6 +38,15 @@
           "title": "js",
           "view": "page"
         }
+      ],
+      "uiExtensions": [
+        {
+          "id": "search-note",
+          "slot": "search.source-selector.after",
+          "mode": "append",
+          "view": "page",
+          "order": 10
+        }
       ]
     },
     "permissions": [],

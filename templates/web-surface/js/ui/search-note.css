@@ -1,0 +1,3 @@
+:where([data-ceru-plugin-slot]) {
+  --example-plugin-accent: #2f9e89;
+}
