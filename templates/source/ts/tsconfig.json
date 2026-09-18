@@ -12,5 +12,5 @@
     "types": [],
     "jsx": "react-jsx"
   },
-  "include": ["src"]
+  "include": ["src", ".ceru-dev/types/**/*.d.ts"]
 }

@@ -1,5 +1,7 @@
 import { definePlugin } from '@shiqianjiang/ceru-plugin-sdk'
 
+/** @typedef {typeof import('./plugin.config.js').default} PluginConfig */
+
 // 本地演示数据。请在接入真实音源时声明所需的网络权限。
 const tracks = [
   { id: 'morning', title: 'Morning Light', artist: 'Ceru Demo' },
@@ -7,12 +9,14 @@ const tracks = [
   { id: 'night', title: 'Night Walk', artist: 'Ceru Demo' },
 ]
 
-export default definePlugin((ctx) => {
+export default definePlugin(async (ctx) => {
+  /** @type {Readonly<PluginConfig>} */
+  const config = await ctx.config.get()
   ctx.actions.register('hello', async () => {
     await ctx.ui.notify({
       key: 'welcome',
       level: 'info',
-      message: '演示插件已就绪。试试搜索 Morning、Rain 或 Night。',
+      message: `${config.displayName} 已就绪。试试搜索 Morning、Rain 或 Night。`,
     })
   })
 

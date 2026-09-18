@@ -13,5 +13,5 @@
     "jsx": "preserve",
     "jsxImportSource": "vue"
   },
-  "include": ["src"]
+  "include": ["src", ".ceru-dev/types/**/*.d.ts"]
 }

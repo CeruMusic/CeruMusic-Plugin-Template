@@ -14,7 +14,7 @@
     "@shiqianjiang/ceru-plugin-sdk": "^0.2.1"
   },
   "devDependencies": {
-    "@shiqianjiang/ceru-plugin-cli": "^0.2.3",
+    "@shiqianjiang/ceru-plugin-cli": "^0.2.4",
     "typescript": "~5.9.3",
     "electron": "^44.4.2",
     "prettier": "^3.6.2"

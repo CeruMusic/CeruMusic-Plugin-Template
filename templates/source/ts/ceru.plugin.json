@@ -1,5 +1,4 @@
 {
-  "$schema": "./node_modules/@shiqianjiang/ceru-plugin-cli/schemas/config.schema.json",
   "manifest": {
     "manifestVersion": 2,
     "id": "local.ts",
@@ -53,6 +52,7 @@
       "state": 1
     }
   },
+  "config": "@./src/plugin.config.ts",
   "entries": {
     "logic.main": "src/index.ts"
   },
