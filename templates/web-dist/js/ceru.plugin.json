@@ -1,4 +1,5 @@
 {
+  "$schema": "./node_modules/@shiqianjiang/ceru-plugin-cli/schemas/config.schema.json",
   "manifest": {
     "manifestVersion": 2,
     "id": "local.js",
