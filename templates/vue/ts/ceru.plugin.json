@@ -52,8 +52,5 @@
   },
   "resources": {},
   "output": "dist/plugin.js",
-  "framework": "vue",
-  "sharedLibraries": {
-    "vue": "^3.5.43"
-  }
+  "framework": "vue"
 }

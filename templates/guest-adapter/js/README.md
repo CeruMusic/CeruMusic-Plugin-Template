@@ -26,8 +26,13 @@ VS Code 按 F5 选择 Launch Ceru plugin；已有调试窗口时选择 Attach to
 - 默认封面：await ctx.assets.url('placeholder.cover')。
 - 共享工具：ctx.utils.lodash。
 
-框架模板默认使用声明过版本的宿主 Vue/React 生产运行时；开发编译器不进入插件。
-若需要把生产运行时一起打包，可将 ceru.plugin.json 的 sharedLibraries 改为 {}。
+Vue/React 的生产运行代码、页面和样式直接编入发行 JS，宿主不提供框架。
+TypeScript、Vue 编译器、构建工具与开发服务器不会进入产物。
+运行 npm run preview 可只加载 dist/plugin.js 检查发布后的行为。
+
+若 VS Code 打开的是父目录，请打开本工程的 ceru-plugin.code-workspace，
+再在“运行和调试”中选择 Launch Ceru plugin；已经运行 npm/pnpm dev 时选择 Attach to Ceru plugin。
+F5 执行当前下拉框中的配置，不会自动选择终端所在的子工程。
 
 ## 边界
 

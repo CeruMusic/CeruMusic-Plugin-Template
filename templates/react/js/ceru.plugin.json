@@ -52,9 +52,5 @@
   },
   "resources": {},
   "output": "dist/plugin.js",
-  "framework": "react",
-  "sharedLibraries": {
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0"
-  }
+  "framework": "react"
 }

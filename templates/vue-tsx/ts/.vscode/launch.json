@@ -12,7 +12,10 @@
       "sourceMapPathOverrides": {
         "ceru:///*": "${workspaceFolder}/*"
       },
-      "skipFiles": ["**/node_modules/**"]
+      "skipFiles": ["**/node_modules/**"],
+      "address": "127.0.0.1",
+      "urlFilter": "http://127.0.0.1:4179/",
+      "timeout": 30000
     },
     {
       "name": "Attach to Ceru plugin",
@@ -24,7 +27,10 @@
       "sourceMapPathOverrides": {
         "ceru:///*": "${workspaceFolder}/*"
       },
-      "skipFiles": ["**/node_modules/**"]
+      "skipFiles": ["**/node_modules/**"],
+      "address": "127.0.0.1",
+      "urlFilter": "http://127.0.0.1:4179/",
+      "timeout": 30000
     }
   ]
 }

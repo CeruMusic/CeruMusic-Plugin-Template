@@ -3,8 +3,7 @@
   "tasks": [
     {
       "label": "Ceru: dev",
-      "type": "npm",
-      "script": "dev",
+      "type": "process",
       "isBackground": true,
       "problemMatcher": {
         "owner": "ceru",
@@ -15,8 +14,17 @@
         "background": {
           "activeOnStart": true,
           "beginsPattern": "^.*$",
-          "endsPattern": "^Electron debugger:"
+          "endsPattern": "^CERU_DEBUG_READY "
         }
+      },
+      "command": "node",
+      "args": [
+        "${workspaceFolder}/node_modules/@shiqianjiang/ceru-plugin-cli/dist/bin.js",
+        "dev",
+        "--ensure-running"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
       }
     },
     {

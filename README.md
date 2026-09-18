@@ -17,7 +17,7 @@ npm install
 npm run dev
 ~~~
 
-运行 npm run build 后分发单个 dist/plugin.js。Vue/React 的开发编译器不会进入产物；框架模板默认按版本声明使用宿主生产运行时，也可以选择将生产运行时打入文件。
+运行 npm run build 后分发单个 dist/plugin.js。Vue/React 的生产运行代码与页面、样式一起编入文件，宿主不提供框架；开发编译器不会进入产物。npm run preview 可只加载这个文件检查发布后的行为。
 
 ## 模板目录
 
@@ -34,6 +34,8 @@ npm run dev
 | [web-dist](templates/web-dist) | 已构建 HTML/CSS/JS 页面的封装 |
 
 每种模板都有 ts/ 与 js/ 两个变体，附带格式化、VS Code 调试与配置提示。模板中的 _gitignore 在创建项目时会还原为 .gitignore。
+
+多根工作区或只打开父目录时，VS Code 不会递归发现子工程的 launch.json。请打开创建工程中的 ceru-plugin.code-workspace，选择 Launch Ceru plugin 或 Attach to Ceru plugin，再按 F5。
 
 ## 分享成品插件
 
