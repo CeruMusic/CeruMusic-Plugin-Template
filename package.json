@@ -1,13 +1,13 @@
 {
   "name": "ceru-plugin-community",
   "private": true,
-  "version": "0.2.5",
+  "version": "0.2.6",
   "type": "module",
   "scripts": {
     "test": "node scripts/validate-contributions.mjs"
   },
   "devDependencies": {
-    "@shiqianjiang/ceru-plugin-issuer": "0.2.1",
+    "@shiqianjiang/ceru-plugin-issuer": "0.2.4",
     "prettier": "3.6.2"
   }
 }
