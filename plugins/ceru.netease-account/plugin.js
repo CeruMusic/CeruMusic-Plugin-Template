@@ -2,7 +2,7 @@ exports.manifest = {
   manifestVersion: 2,
   id: "ceru.netease-account",
   name: "网易云账号",
-  version: "1.2.1",
+  version: "1.2.2",
   author: "CeruMusic",
   license: "MIT",
   description: "扫码登录网易云，访问每日推荐、个人歌单，并按账号权限播放音乐",
@@ -62,12 +62,13 @@ exports.manifest = {
         ],
         qualities: [
           "128k",
+          "192k",
           "320k",
           "flac",
           "hires",
-          "jyeffect",
-          "vivid",
-          "jymaster"
+          "atmos",
+          "atmos_plus",
+          "master"
         ],
         icon: {
           kind: "host",
@@ -281,6 +282,10 @@ const __ceru_entry = (() => {
   function assertResourceRef(value) {
     if (!record(value) || !["pluginId", "providerId", "kind", "id"].every((key) => text(value[key], 2048) && value[key].length > 0))
       throw new Error("Invalid resource reference");
+    if (value.connectionId !== void 0 && (!text(value.connectionId, 2048) || !value.connectionId))
+      throw new Error("Invalid resource connection");
+    if (value.scope !== void 0 && (value.scope !== "provider" || value.kind !== "track" || value.connectionId !== void 0))
+      throw new Error("Provider scope requires a public track without a connection");
     if (value.data !== void 0) {
       if (!record(value.data))
         throw new Error("Invalid resource private data");
@@ -308,6 +313,11 @@ const __ceru_entry = (() => {
           throw new Error("Track metadata must contain artists");
         if (item.metadata.durationMs !== void 0 && !milliseconds(item.metadata.durationMs))
           throw new Error("Invalid track duration");
+        const { qualities, qualitySizes } = item.metadata;
+        if (qualities !== void 0 && (!Array.isArray(qualities) || qualities.length > 128 || !qualities.every((quality) => text(quality, 128) && !!quality)))
+          throw new Error("Invalid track qualities");
+        if (qualitySizes !== void 0 && (!record(qualitySizes) || Object.keys(qualitySizes).length > 128 || Object.entries(qualitySizes).some(([quality, bytes]) => !qualities?.includes(quality) || !Number.isSafeInteger(bytes) || Number(bytes) <= 0)))
+          throw new Error("Invalid track quality sizes");
       }
       if (item.ref.kind === "playlist" && item.playlist !== void 0) {
         if (!record(item.playlist))
@@ -380,12 +390,18 @@ const __ceru_entry = (() => {
     const providerId = "wy";
     const qualityLevels = {
       "128k": "standard",
+      "192k": "higher",
       "320k": "exhigh",
       flac: "lossless",
       hires: "hires",
-      jyeffect: "jyeffect",
-      vivid: "vivid",
-      jymaster: "jymaster"
+      atmos: "jyeffect",
+      atmos_plus: "sky",
+      master: "jymaster"
+    };
+    const legacyQualityIds = {
+      ...Object.fromEntries(Object.entries(qualityLevels).map(([id, level]) => [level, id])),
+      // Older plugin releases advertised vivid for the enhanced surround slot.
+      vivid: "atmos_plus"
     };
     let session = null;
     let login = null;
@@ -396,6 +412,7 @@ const __ceru_entry = (() => {
     let storageWrites = Promise.resolve();
     const deviceId = crypto.randomBytes(16).toString("hex");
     const cache = /* @__PURE__ */ new Map();
+    const qualityCache = /* @__PURE__ */ new Map();
     const libraryPages = /* @__PURE__ */ new Map();
     let libraryPage = 1;
     const asArray = (value) => Array.isArray(value) ? value : [];
@@ -406,7 +423,8 @@ const __ceru_entry = (() => {
       pluginId: ctx.plugin.id,
       providerId,
       kind,
-      id: str(id)
+      id: str(id),
+      ...kind === "track" ? { scope: "provider" } : {}
     });
     const operation = () => ({
       id: "netease-" + Date.now(),
@@ -539,7 +557,7 @@ const __ceru_entry = (() => {
     }
     function qualities() {
       const level = tier();
-      return level === "SVIP" ? Object.keys(qualityLevels) : level === "VIP" ? ["128k", "320k", "flac", "hires"] : ["128k"];
+      return level === "SVIP" ? Object.keys(qualityLevels) : level === "VIP" ? ["128k", "192k", "320k", "flac", "hires"] : ["128k"];
     }
     function publicState() {
       const level = tier();
@@ -729,7 +747,21 @@ const __ceru_entry = (() => {
       return publicState();
     });
     function track(song) {
-      const privilege = song.privilege || {};
+      const files = {
+        "128k": song.l || song.lMusic,
+        "192k": song.m || song.mMusic,
+        "320k": song.h || song.hMusic,
+        flac: song.sq,
+        hires: song.hr,
+        atmos: song.je,
+        atmos_plus: song.skye,
+        master: song.jm
+      };
+      const available = Object.keys(files).filter((quality) => files[quality] != null);
+      const qualitySizes = Object.fromEntries(available.flatMap((quality) => {
+        const bytes = Number(files[quality].size);
+        return Number.isSafeInteger(bytes) && bytes > 0 ? [[quality, bytes]] : [];
+      }));
       return {
         ref: ref("track", song.id),
         title: str(song.name),
@@ -745,9 +777,45 @@ const __ceru_entry = (() => {
           },
           durationMs: positive(song.dt || song.duration),
           artworkUrl: str(song.al?.picUrl || song.album?.picUrl),
-          qualities: Number(privilege.fee ?? song.fee) === 1 && tier() === "FREE" ? [] : qualities()
+          qualities: available.length ? available : ["128k"],
+          qualitySizes
         }
       };
+    }
+    async function tracksWithQualities(songs, op) {
+      const items = asArray(songs), result = new Array(items.length);
+      let index = 0;
+      await Promise.all(Array.from({ length: Math.min(6, items.length) }, async () => {
+        while (index < items.length) {
+          const position = index++, song = items[position], id = str(song.id);
+          op.signal.throwIfAborted();
+          let details = qualityCache.get(id);
+          if (!details || details.expiresAt < Date.now()) {
+            try {
+              const response = await ctx.http.request({
+                url: "https://music.163.com/api/song/music/detail/get?songId=" + encodeURIComponent(id),
+                method: "GET",
+                permissionKey: "netease.network",
+                operation: op,
+                timeoutMs: 5e3,
+                headers: { Referer: "https://music.163.com/" }
+              });
+              const body = typeof response.body === "string" ? JSON.parse(response.body) : response.body;
+              if (response.status !== 200 || body?.code !== 200 || !body.data)
+                throw failure("音质详情暂不可用", "NETWORK_ERROR");
+              const files = Object.fromEntries(["l", "m", "h", "sq", "hr", "je", "skye", "jm"].filter((key) => Object.hasOwn(body.data, key)).map((key) => [key, body.data[key]]));
+              details = { files, expiresAt: Date.now() + 5 * 60 * 1e3 };
+              qualityCache.set(id, details);
+              if (qualityCache.size > 2e3) qualityCache.delete(qualityCache.keys().next().value);
+            } catch {
+              op.signal.throwIfAborted();
+              details = void 0;
+            }
+          }
+          result[position] = track({ ...song, ...details?.files });
+        }
+      }));
+      return result;
     }
     function playlist(item) {
       return {
@@ -779,7 +847,7 @@ const __ceru_entry = (() => {
           {
             id: "songs",
             title: "我的每日推荐",
-            items: asArray(songs.data?.dailySongs || songs.recommend).map(track)
+            items: await tracksWithQualities(songs.data?.dailySongs || songs.recommend, op)
           },
           {
             id: "playlists",
@@ -822,7 +890,7 @@ const __ceru_entry = (() => {
       const ids = asArray(list.trackIds).slice(offset, offset + 100).map((item) => ({ id: item.id }));
       const songs = ids.length ? await api("/api/v3/song/detail", { c: JSON.stringify(ids) }, op) : { songs: [] };
       return {
-        items: asArray(songs.songs).map(track),
+        items: await tracksWithQualities(songs.songs, op),
         name: str(list.name),
         playlist: playlist(list).playlist,
         totalEstimate: asArray(list.trackIds).length,
@@ -965,7 +1033,7 @@ const __ceru_entry = (() => {
         { c: JSON.stringify([...new Set(ids)].map((id) => ({ id }))) },
         op
       );
-      const songs = new Map(asArray(result.songs).map((song) => [str(song.id), track(song)]));
+      const songs = new Map((await tracksWithQualities(result.songs, op)).map((song) => [song.ref.id, song]));
       const items = [...new Set(ids)].map((id) => songs.get(id)).filter(Boolean);
       if (!items.length) throw failure("没有可播放的歌曲", "NOT_FOUND");
       const selected = items.find((item) => item.ref.id === selectedId);
@@ -986,7 +1054,7 @@ const __ceru_entry = (() => {
               { s: request.query, type: 1, limit: size, offset, total: true },
               op
             );
-            const items = asArray(result.result?.songs).map(track), total = positive(result.result?.songCount);
+            const items = await tracksWithQualities(result.result?.songs, op), total = positive(result.result?.songCount);
             return {
               items,
               totalEstimate: total,
@@ -996,6 +1064,7 @@ const __ceru_entry = (() => {
           async resolve(resource, quality, op) {
             try {
               await ensureAccount(op);
+              quality = legacyQualityIds[quality] || quality;
               quality ||= qualities()[0];
               if (!qualities().includes(quality))
                 throw failure("当前网易云账号不支持该音质，请选择可用音质", "UNSUPPORTED");
@@ -1110,6 +1179,7 @@ const __ceru_entry = (() => {
       session = null;
       cache.clear();
       libraryPages.clear();
+      qualityCache.clear();
     });
   });
   return __toCommonJS(index_exports);

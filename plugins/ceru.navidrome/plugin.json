@@ -1,0 +1,10 @@
+{
+  "id": "ceru.navidrome",
+  "name": "Navidrome",
+  "version": "1.1.1",
+  "description": "将自己的 Navidrome 音乐库接入澜音搜索、歌单、播放与歌词",
+  "author": "CeruMusic",
+  "license": "MIT",
+  "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/ceru.navidrome",
+  "entry": "plugin.js"
+}

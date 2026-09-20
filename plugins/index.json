@@ -12,9 +12,19 @@
       "entry": "plugin.js"
     },
     {
+      "id": "ceru.navidrome",
+      "name": "Navidrome",
+      "version": "1.1.1",
+      "description": "将自己的 Navidrome 音乐库接入澜音搜索、歌单、播放与歌词",
+      "author": "CeruMusic",
+      "license": "MIT",
+      "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/ceru.navidrome",
+      "entry": "plugin.js"
+    },
+    {
       "id": "ceru.netease-account",
       "name": "网易云账号",
-      "version": "1.2.1",
+      "version": "1.2.2",
       "description": "扫码登录网易云，访问每日推荐、个人歌单，并按账号权限播放音乐",
       "author": "CeruMusic",
       "license": "MIT",

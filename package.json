@@ -7,7 +7,8 @@
     "test": "node scripts/validate-contributions.mjs"
   },
   "devDependencies": {
-    "@shiqianjiang/ceru-plugin-issuer": "0.2.4",
+    "@shiqianjiang/ceru-plugin-issuer": "0.3.6",
+    "@shiqianjiang/ceru-plugin-sdk": "0.3.6",
     "prettier": "3.6.2"
   }
 }

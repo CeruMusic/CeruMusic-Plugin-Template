@@ -20,7 +20,9 @@ async function localFile(base, file) {
   return actual
 }
 let templates = 0
-for (const name of await readdir(join(root, 'templates'))) {
+for (const entry of await readdir(join(root, 'templates'), { withFileTypes: true })) {
+  if (!entry.isDirectory()) continue
+  const name = entry.name
   for (const language of ['ts', 'js']) {
     const dir = join(root, 'templates', name, language)
     const config = await json(join(dir, 'ceru.plugin.json'))
