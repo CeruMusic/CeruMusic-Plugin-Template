@@ -16,6 +16,7 @@
         "activation": ["onCommand:hello", "onProvider:catalog"]
       },
       "surfaces": [
+        { "id": "library", "kind": "native", "entry": "render.library" },
         {
           "id": "settings",
           "kind": "schema",
@@ -25,6 +26,12 @@
     },
     "contributes": {
       "commands": [
+        { "id": "account.summary", "title": "账号状态", "action": "account.summary" },
+        { "id": "render.library", "title": "渲染音乐库", "action": "render.library" },
+        { "id": "library.open", "title": "打开原生歌单页", "action": "library.open" },
+        { "id": "playlist.open", "title": "打开歌单", "action": "playlist.open" },
+        { "id": "playlist.import", "title": "导入歌单", "action": "playlist.import" },
+        { "id": "track.play", "title": "播放", "action": "track.play" },
         {
           "id": "hello",
           "title": "Hello",
@@ -41,7 +48,7 @@
         {
           "id": "catalog",
           "name": "js",
-          "protocols": ["music.search@1", "music.resolve@1"],
+          "protocols": ["music.search@1", "music.resolve@1", "music.playlists@1"],
           "icon": {
             "kind": "host",
             "name": "music-note"
@@ -49,6 +56,9 @@
           "connectionMode": "multiple"
         }
       ],
+      "playlistSections": [{ "id": "library", "title": "我的音乐库", "view": "library", "order": 0 }],
+      "accountItems": [{ "id": "catalog", "title": "音乐库账号", "view": "settings", "action": "account.summary" }],
+      "playlistImporters": [{ "id": "catalog", "title": "演示歌单", "providerId": "catalog" }],
       "settingsPages": [
         {
           "id": "settings",
@@ -57,7 +67,7 @@
         }
       ]
     },
-    "permissions": [],
+    "permissions": [{ "key": "playback", "name": "player.control", "reason": "使用 Host 的播放器和队列播放音乐库歌曲" }],
     "dataSchemas": {
       "config": 1,
       "state": 1

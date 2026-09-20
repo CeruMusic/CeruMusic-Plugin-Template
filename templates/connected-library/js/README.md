@@ -36,8 +36,12 @@ F5 执行当前下拉框中的配置，不会自动选择终端所在的子工�
 
 ## 边界
 
-本模板面向 v2 协议。开发工作台不是当前 v1 桌面 Host 的兼容层。
+本模板面向 v2 协议，需要支持 native Surface 的 Host。
 凭据保险箱、完整音乐业务和 Guest 安装需要正式 Host；不支持的调试调用会明确报错。
 不要把私人 API Key、卡密或发行私钥提交到仓库。
 
-此 demo 展示连接表单和状态更新；点击“演示连接”不会联网或保存密码。
+此 demo 展示原生歌单网格、歌曲列表、账号菜单贡献、导入及播放动作，还有连接表单和状态更新；点击“演示连接”不会联网或保存密码。元数据来自本地常量，播放前需实现自己的 tracks.resolve。
+
+原生页面由 src/index.js 中的 defineNativeView 返回标准 JSON 内容，playlistSections 把它放入 Host 现有本地／云歌单页；library.open 使用 navigation.open({ page: 'playlist', sectionId: 'library' }) 跳转定位，不打开抽屉。点击具体歌单传递完整 ResourceRef，进入 Host 歌单详情；播放调用 Host 队列和播放器；导入调用 Host 现有导入窗口。独立工作台保留本地／云歌单示意区域并渲染插件区块，完整音乐业务由正式 Host 实现。
+
+账号摘要返回 signedIn、displayName、可选 avatarUrl/badge；账号变化通过 ctx.ui.setState 通知 Host。自定义账号登录页面也可使用 Vue 或 React 打包为 Web Surface，与原生音乐库页面同时存在。

@@ -13,13 +13,25 @@
     "modules": {
       "logic": {
         "entry": "logic.main",
-        "activation": ["onCommand:hello"]
+        "activation": [
+          "onCommand:hello"
+        ]
       },
       "surfaces": [
         {
           "id": "page",
           "kind": "web",
-          "entry": "view.main"
+          "entry": "view.main",
+          "title": "插件页面",
+          "presentation": {
+            "kind": "drawer",
+            "placement": "right",
+            "size": 480
+          },
+          "lifecycle": {
+            "openAction": "page.open",
+            "closeAction": "page.close"
+          }
         }
       ]
     },
@@ -29,6 +41,16 @@
           "id": "hello",
           "title": "Hello",
           "action": "hello"
+        },
+        {
+          "id": "page.open",
+          "title": "打开页面",
+          "action": "page.open"
+        },
+        {
+          "id": "page.close",
+          "title": "关闭页面",
+          "action": "page.close"
         }
       ],
       "sidebarItems": [
@@ -46,6 +68,13 @@
           "mode": "append",
           "view": "page",
           "order": 10
+        }
+      ],
+      "settingsPages": [
+        {
+          "id": "settings",
+          "title": "插件设置",
+          "view": "page"
         }
       ]
     },

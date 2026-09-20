@@ -1,4 +1,25 @@
 {
   "schemaVersion": 1,
-  "plugins": []
+  "plugins": [
+    {
+      "id": "ceru.bilibili",
+      "name": "哔哩哔哩音源",
+      "version": "1.0.2",
+      "description": "B站搜索、收藏夹、分P、排行榜、字幕歌词与音频播放，支持Cookie及扫码登录",
+      "author": "CeruMusic",
+      "license": "MIT",
+      "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/ceru.bilibili",
+      "entry": "plugin.js"
+    },
+    {
+      "id": "ceru.netease-account",
+      "name": "网易云账号",
+      "version": "1.2.1",
+      "description": "扫码登录网易云，访问每日推荐、个人歌单，并按账号权限播放音乐",
+      "author": "CeruMusic",
+      "license": "MIT",
+      "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/ceru.netease-account",
+      "entry": "plugin.js"
+    }
+  ]
 }
