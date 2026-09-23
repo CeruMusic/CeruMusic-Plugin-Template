@@ -2,7 +2,7 @@ exports.manifest = {
   manifestVersion: 2,
   id: "ceru.netease-account",
   name: "网易云账号",
-  version: "1.2.2",
+  version: "1.2.3",
   author: "CeruMusic",
   license: "MIT",
   description: "扫码登录网易云，访问每日推荐、个人歌单，并按账号权限播放音乐",
@@ -754,7 +754,7 @@ const __ceru_entry = (() => {
         flac: song.sq,
         hires: song.hr,
         atmos: song.je,
-        atmos_plus: song.skye,
+        atmos_plus: song.sk,
         master: song.jm
       };
       const available = Object.keys(files).filter((quality) => files[quality] != null);
@@ -803,7 +803,7 @@ const __ceru_entry = (() => {
               const body = typeof response.body === "string" ? JSON.parse(response.body) : response.body;
               if (response.status !== 200 || body?.code !== 200 || !body.data)
                 throw failure("音质详情暂不可用", "NETWORK_ERROR");
-              const files = Object.fromEntries(["l", "m", "h", "sq", "hr", "je", "skye", "jm"].filter((key) => Object.hasOwn(body.data, key)).map((key) => [key, body.data[key]]));
+              const files = Object.fromEntries(["l", "m", "h", "sq", "hr", "je", "sk", "jm"].filter((key) => Object.hasOwn(body.data, key)).map((key) => [key, body.data[key]]));
               details = { files, expiresAt: Date.now() + 5 * 60 * 1e3 };
               qualityCache.set(id, details);
               if (qualityCache.size > 2e3) qualityCache.delete(qualityCache.keys().next().value);

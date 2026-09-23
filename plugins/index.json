@@ -24,7 +24,7 @@
     {
       "id": "ceru.netease-account",
       "name": "网易云账号",
-      "version": "1.2.2",
+      "version": "1.2.3",
       "description": "扫码登录网易云，访问每日推荐、个人歌单，并按账号权限播放音乐",
       "author": "CeruMusic",
       "license": "MIT",
