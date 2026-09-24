@@ -12,6 +12,16 @@
       "entry": "plugin.js"
     },
     {
+      "id": "ceru.lx-playlist-import",
+      "name": "洛雪歌单导入",
+      "version": "1.0.0",
+      "description": "读取洛雪音乐（LX Music）导出的 .json / .lxmc 歌单文件，解析后导入澜音本地歌单",
+      "author": "CeruMusic",
+      "license": "MIT",
+      "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/ceru.lx-playlist-import",
+      "entry": "plugin.js"
+    },
+    {
       "id": "ceru.navidrome",
       "name": "Navidrome",
       "version": "1.1.1",
