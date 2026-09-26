@@ -1126,11 +1126,11 @@ const __ceru_entry = (() => {
             const parse = (text2) => {
               const lines2 = [];
               for (const line of str(text2).split(/\r?\n/)) {
-                const tags = [...line.matchAll(/\[(\d+):(\d+(?:\.\d+)?)\]/g)];
+                const tags = [...line.matchAll(/\[(\d+):(\d+)(?:[:.](\d+))?\]/g)];
                 const content = line.replace(/\[[^\]]+\]/g, "").trim();
                 for (const tag of tags)
                   lines2.push({
-                    startTimeMs: Math.round((Number(tag[1]) * 60 + Number(tag[2])) * 1e3),
+                    startTimeMs: Math.round((Number(tag[1]) * 60 + Number(tag[2]) + (tag[3] ? Number(tag[3]) / Math.pow(10, tag[3].length) : 0)) * 1e3),
                     text: content
                   });
               }
