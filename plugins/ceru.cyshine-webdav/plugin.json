@@ -1,0 +1,10 @@
+{
+  "id": "ceru.cyshine-webdav",
+  "name": "栖弦歌单同步",
+  "version": "0.2.6",
+  "description": "让手机栖弦与桌面澜音通过 WebDAV 双向同步歌单：澜音侧新增/删除会自动写回云端，栖弦侧的删除会在澜音列出待清理清单。",
+  "author": "Yecho",
+  "license": "MIT",
+  "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/ceru.cyshine-webdav",
+  "entry": "plugin.js"
+}
