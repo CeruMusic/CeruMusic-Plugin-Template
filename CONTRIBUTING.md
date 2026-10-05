@@ -28,6 +28,10 @@ plugin.json 示例：
 }
 ```
 
+最后需要在
+plugins/index.json
+添加如上plugin的内容 在 list 中 以加入索引
+
 也可以用 download 和 sha256 替代 entry，指向你自己发布的固定版本文件。URL 必须使用 HTTPS；sha256 必须是该文件的 64 位十六进制摘要。CI 只校验远端记录的格式，不自动下载或运行其内容。
 
 README 应说明：
