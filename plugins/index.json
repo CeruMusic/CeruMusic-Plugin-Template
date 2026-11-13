@@ -2,6 +2,16 @@
   "schemaVersion": 1,
   "plugins": [
     {
+      "id": "chaochao.roam",
+      "name": "私人漫游",
+      "version": "0.2.0",
+      "description": "基于当前播放的歌曲不断推荐相似作品，队列快放完时自动续歌，像网易云私人漫游一样可以一直听下去",
+      "author": "chaochao × DeepSeek",
+      "license": "MIT",
+      "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/chaochao.roam",
+      "entry": "plugin.js"
+    },
+    {
       "id": "ceru.bilibili",
       "name": "哔哩哔哩音源",
       "version": "1.0.2",
