@@ -1,0 +1,77 @@
+{
+  "manifest": {
+    "manifestVersion": 3,
+    "id": "local.player-skin",
+    "name": "留声",
+    "version": "0.1.0",
+    "engines": {
+      "hostApi": "^3.0.0",
+      "logicRuntime": "ceru-js@1"
+    },
+    "entry": {
+      "views": [
+        {
+          "id": "lyrics",
+          "kind": "component",
+          "module": "view.lyrics"
+        },
+        {
+          "id": "artwork",
+          "kind": "component",
+          "module": "view.artwork"
+        },
+        {
+          "id": "background",
+          "kind": "component",
+          "module": "view.background"
+        }
+      ]
+    },
+    "ui": {
+      "regions": [
+        {
+          "view": "lyrics",
+          "region": "player.lyrics"
+        },
+        {
+          "view": "artwork",
+          "region": "player.artwork"
+        },
+        {
+          "view": "background",
+          "region": "player.background"
+        }
+      ],
+      "skins": [
+        {
+          "regions": [
+            "player.lyrics",
+            "player.artwork",
+            "player.background"
+          ],
+          "id": "studio",
+          "title": "留声",
+          "preview": { "kind": "asset", "resource": "studio.preview" },
+          "settings": {
+            "type": "object",
+            "properties": {
+              "useAml": { "type": "boolean", "title": "逐字歌词", "default": false },
+              "accent": { "type": "string", "format": "color", "title": "装饰颜色", "default": "#47867a" },
+              "showAccent": { "type": "boolean", "title": "显示装饰线", "default": true }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "framework": "vue",
+  "resources": {
+    "studio.preview": { "path": "assets/studio-preview.svg", "type": "text", "mime": "image/svg+xml" }
+  },
+  "entries": {
+    "view.artwork": "src/Artwork.vue",
+    "view.lyrics": "src/BuiltinLyrics.vue",
+    "view.background": "src/Background.vue"
+  },
+  "output": "dist/plugin.js"
+}

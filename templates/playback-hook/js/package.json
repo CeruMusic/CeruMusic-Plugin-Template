@@ -1,0 +1,23 @@
+{
+  "name": "js",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "ceru-plugin dev",
+    "build": "ceru-plugin build",
+    "typecheck": "ceru-plugin typecheck",
+    "validate": "ceru-plugin validate dist/plugin.js",
+    "preview": "ceru-plugin preview dist/plugin.js",
+    "test": "ceru-plugin test-hooks",
+    "check:compat": "ceru-plugin check-compat"
+  },
+  "dependencies": {
+    "@shiqianjiang/ceru-plugin-sdk": "^3.0.0"
+  },
+  "devDependencies": {
+    "@shiqianjiang/ceru-plugin-cli": "^3.0.0",
+    "typescript": "~5.9.3",
+    "prettier": "^3.6.2"
+  }
+}

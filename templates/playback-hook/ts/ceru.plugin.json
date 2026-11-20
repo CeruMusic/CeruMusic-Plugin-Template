@@ -1,0 +1,36 @@
+{
+  "manifest": {
+    "manifestVersion": 3,
+    "id": "local.ts",
+    "name": "ts",
+    "version": "0.1.0",
+    "description": "本地播放拦截与队列改写示例",
+    "dataSchemas": {
+      "config": 1,
+      "state": 1
+    },
+    "engines": {
+      "hostApi": "^3.0.0",
+      "logicRuntime": "ceru-js@1"
+    },
+    "entry": {
+      "logic": {
+        "module": "logic.main"
+      }
+    },
+    "uses": {
+      "permissions": [
+        {
+          "key": "intercept",
+          "name": "player.intercept",
+          "reason": "处理带演示前缀的点播和队列操作，并在指定演示歌曲解析失败时尝试备用音源"
+        }
+      ]
+    }
+  },
+  "entries": {
+    "logic.main": "src/index.ts"
+  },
+  "resources": {},
+  "output": "dist/plugin.js"
+}

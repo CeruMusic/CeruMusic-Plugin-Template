@@ -1,42 +1,44 @@
 {
   "manifest": {
-    "manifestVersion": 2,
+    "manifestVersion": 3,
     "id": "local.ts",
     "name": "ts",
     "version": "0.1.0",
-    "description": "A Ceru Music v2 importer plugin",
-    "engines": {
-      "hostApi": "^2.0.0",
-      "logicRuntime": "ceru-js@1",
-      "uiSchema": "^1.0.0"
+    "description": "A Ceru Music v3 importer plugin",
+    "dataSchemas": {
+      "config": 1,
+      "state": 1
     },
-    "modules": {
+    "engines": {
+      "hostApi": "^3.0.0",
+      "logicRuntime": "ceru-js@1"
+    },
+    "entry": {
       "logic": {
-        "entry": "logic.main",
-        "activation": ["onCommand:hello"]
+        "activation": [
+          "onCommand:hello"
+        ],
+        "module": "logic.main"
       }
     },
-    "contributes": {
-      "commands": [
-        {
-          "id": "hello",
-          "title": "打开歌单导入",
-          "action": "hello"
-        }
-      ],
-      "playlistImporters": [
+    "provides": {
+      "importers": [
         {
           "id": "text-list",
           "title": "从文本清单导入（演示）",
           "description": "复用宿主歌单导入窗口；每行一个标题",
           "placeholder": "输入标题，以逗号分隔"
         }
+      ],
+      "actions": [
+        {
+          "id": "hello",
+          "title": "打开歌单导入"
+        }
       ]
     },
-    "permissions": [],
-    "dataSchemas": {
-      "config": 1,
-      "state": 1
+    "uses": {
+      "permissions": []
     }
   },
   "entries": {

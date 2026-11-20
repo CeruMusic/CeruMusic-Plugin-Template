@@ -7,8 +7,14 @@
     "test": "node scripts/validate-contributions.mjs"
   },
   "devDependencies": {
-    "@shiqianjiang/ceru-plugin-issuer": "0.3.6",
-    "@shiqianjiang/ceru-plugin-sdk": "0.3.6",
-    "prettier": "3.6.2"
+    "@shiqianjiang/ceru-plugin-issuer": "file:vendor/local-validation/shiqianjiang-ceru-plugin-issuer-3.0.0.tgz",
+    "@shiqianjiang/ceru-plugin-sdk": "file:vendor/local-validation/shiqianjiang-ceru-plugin-sdk-3.0.0.tgz",
+    "prettier": "3.6.2",
+    "ceru-plugin-issuer-v2": "file:vendor/local-validation/shiqianjiang-ceru-plugin-issuer-0.3.16.tgz"
+  },
+  "overrides": {
+    "ceru-plugin-issuer-v2": {
+      "@shiqianjiang/ceru-plugin-sdk": "file:vendor/local-validation/shiqianjiang-ceru-plugin-sdk-0.3.16.tgz"
+    }
   }
 }

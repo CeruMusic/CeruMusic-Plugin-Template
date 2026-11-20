@@ -1,0 +1,316 @@
+[
+  {
+    "name": "未授权时保留原始点播",
+    "operation": "player.play",
+    "granted": false,
+    "input": {
+      "track": {
+        "ref": {
+          "kind": "track",
+          "providerId": "demo",
+          "id": "one"
+        },
+        "title": "[拦截示例] 测试歌曲",
+        "metadata": {
+          "artists": [
+            "Ceru Demo"
+          ]
+        }
+      }
+    },
+    "expect": {
+      "prevented": false,
+      "input": {
+        "track": {
+          "ref": {
+            "kind": "track",
+            "providerId": "demo",
+            "id": "one"
+          },
+          "title": "[拦截示例] 测试歌曲",
+          "metadata": {
+            "artists": [
+              "Ceru Demo"
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "授权后拦截标记歌曲",
+    "operation": "player.play",
+    "granted": true,
+    "input": {
+      "track": {
+        "ref": {
+          "kind": "track",
+          "providerId": "demo",
+          "id": "one"
+        },
+        "title": "[拦截示例] 测试歌曲",
+        "metadata": {
+          "artists": [
+            "Ceru Demo"
+          ]
+        }
+      }
+    },
+    "expect": {
+      "prevented": true
+    }
+  },
+  {
+    "name": "普通点播执行一次",
+    "operation": "player.play",
+    "granted": true,
+    "input": {
+      "track": {
+        "ref": {
+          "kind": "track",
+          "providerId": "demo",
+          "id": "one"
+        },
+        "title": "普通演示歌曲",
+        "metadata": {
+          "artists": [
+            "Ceru Demo"
+          ]
+        }
+      }
+    },
+    "expect": {
+      "prevented": false,
+      "input": {
+        "track": {
+          "ref": {
+            "kind": "track",
+            "providerId": "demo",
+            "id": "one"
+          },
+          "title": "普通演示歌曲",
+          "metadata": {
+            "artists": [
+              "Ceru Demo"
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "优先歌曲插在当前歌曲之后",
+    "operation": "queue.add",
+    "granted": true,
+    "input": {
+      "position": "end",
+      "tracks": [
+        {
+          "ref": {
+            "kind": "track",
+            "providerId": "demo",
+            "id": "one"
+          },
+          "title": "[优先示例] 测试歌曲",
+          "metadata": {
+            "artists": [
+              "Ceru Demo"
+            ]
+          }
+        }
+      ]
+    },
+    "expect": {
+      "prevented": false,
+      "input": {
+        "position": "next",
+        "tracks": [
+          {
+            "ref": {
+              "kind": "track",
+              "providerId": "demo",
+              "id": "one"
+            },
+            "title": "[优先示例] 测试歌曲",
+            "metadata": {
+              "artists": [
+                "Ceru Demo"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "系统媒体键继续播放",
+    "operation": "player.resume",
+    "source": {
+      "kind": "system"
+    },
+    "granted": true,
+    "input": {},
+    "expect": {
+      "prevented": false,
+      "input": {}
+    }
+  },
+  {
+    "name": "其他插件请求暂停",
+    "operation": "player.pause",
+    "source": {
+      "kind": "plugin",
+      "pluginId": "example.caller",
+      "runtime": 3
+    },
+    "granted": true,
+    "input": {},
+    "expect": {
+      "prevented": false,
+      "input": {}
+    }
+  },
+  {
+    "name": "未授权时移除保护歌曲",
+    "operation": "queue.remove",
+    "granted": false,
+    "input": {
+      "tracks": [
+        {
+          "ref": {
+            "kind": "track",
+            "providerId": "demo",
+            "id": "one"
+          },
+          "title": "[保护示例] 测试歌曲",
+          "metadata": {
+            "artists": [
+              "Ceru Demo"
+            ]
+          }
+        }
+      ]
+    },
+    "expect": {
+      "prevented": false,
+      "input": {
+        "tracks": [
+          {
+            "ref": {
+              "kind": "track",
+              "providerId": "demo",
+              "id": "one"
+            },
+            "title": "[保护示例] 测试歌曲",
+            "metadata": {
+              "artists": [
+                "Ceru Demo"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "授权后保留保护歌曲",
+    "operation": "queue.remove",
+    "granted": true,
+    "input": {
+      "tracks": [
+        {
+          "ref": {
+            "kind": "track",
+            "providerId": "demo",
+            "id": "one"
+          },
+          "title": "[保护示例] 测试歌曲",
+          "metadata": {
+            "artists": [
+              "Ceru Demo"
+            ]
+          }
+        }
+      ]
+    },
+    "expect": {
+      "prevented": true
+    }
+  },
+  {
+    "name": "普通队列歌曲仍可移除",
+    "operation": "queue.remove",
+    "granted": true,
+    "input": {
+      "tracks": [
+        {
+          "ref": {
+            "kind": "track",
+            "providerId": "demo",
+            "id": "one"
+          },
+          "title": "普通演示歌曲",
+          "metadata": {
+            "artists": [
+              "Ceru Demo"
+            ]
+          }
+        }
+      ]
+    },
+    "expect": {
+      "prevented": false,
+      "input": {
+        "tracks": [
+          {
+            "ref": {
+              "kind": "track",
+              "providerId": "demo",
+              "id": "one"
+            },
+            "title": "普通演示歌曲",
+            "metadata": {
+              "artists": [
+                "Ceru Demo"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "清空队列沿用默认行为",
+    "operation": "queue.clear",
+    "granted": true,
+    "input": {},
+    "expect": {
+      "prevented": false,
+      "input": {}
+    }
+  },
+  {
+    "name": "主源成功不重试",
+    "operation": "player.resolve", "granted": true, "resolveResults": [true],
+    "input": {"track":{"ref":{"kind":"track","providerId":"demo-primary","id":"morning"},"title":"Morning","metadata":{"artists":[]}},"quality":"128k"},
+    "expect": {"prevented":false,"input":{"track":{"ref":{"kind":"track","providerId":"demo-primary","id":"morning"},"title":"Morning","metadata":{"artists":[]}},"quality":"128k"}}
+  },
+  {
+    "name": "主源失败后用备用歌曲解析",
+    "operation": "player.resolve", "granted": true, "resolveResults": [false,true],
+    "input": {"track":{"ref":{"kind":"track","providerId":"demo-primary","id":"morning"},"title":"Morning","metadata":{"artists":[]}},"quality":""},
+    "expect": {"prevented":false,"input":{"track":{"ref":{"kind":"track","providerId":"demo-backup","id":"morning-alt"},"title":"Morning","metadata":{"artists":[]}},"quality":""}}
+  },
+  {
+    "name": "备用源失败不重复尝试",
+    "operation": "player.resolve", "granted": true, "resolveResults": [false,false],
+    "input": {"track":{"ref":{"kind":"track","providerId":"demo-primary","id":"morning"},"title":"Morning","metadata":{"artists":[]}},"quality":"128k"},
+    "expect": {"prevented":false,"input":{"track":{"ref":{"kind":"track","providerId":"demo-backup","id":"morning-alt"},"title":"Morning","metadata":{"artists":[]}},"quality":"128k"}}
+  },
+  {
+    "name": "未授权时不向备用源重试",
+    "operation": "player.resolve", "granted": false, "resolveResults": [false],
+    "input": {"track":{"ref":{"kind":"track","providerId":"demo-primary","id":"morning"},"title":"Morning","metadata":{"artists":[]}},"quality":"128k"},
+    "expect": {"prevented":false,"input":{"track":{"ref":{"kind":"track","providerId":"demo-primary","id":"morning"},"title":"Morning","metadata":{"artists":[]}},"quality":"128k"}}
+  }
+]

@@ -2,7 +2,8 @@ import { readdir, readFile, lstat, realpath, writeFile } from 'node:fs/promises'
 import { resolve, join, relative, sep, isAbsolute } from 'node:path'
 import { fileURLToPath } from 'node:url'
 const issuer = await import(process.env.CERU_ISSUER_MODULE || '@shiqianjiang/ceru-plugin-issuer')
-const { readArtifact, validateManifest, parseJsonStrict } = issuer
+const { sniffManifestVersion, validateManifest, parseJsonStrict } = issuer
+const legacy = await import(process.env.CERU_V2_ISSUER_MODULE || 'ceru-plugin-issuer-v2')
 const root = fileURLToPath(new URL('../', import.meta.url))
 const safeId = /^[a-z0-9][a-z0-9._-]{2,127}$/
 async function json(path) {
@@ -29,6 +30,8 @@ for (const entry of await readdir(join(root, 'templates'), { withFileTypes: true
     validateManifest(config.manifest)
     const pkg = await json(join(dir, 'package.json'))
     if (!pkg.private) throw new Error('Template package must default to private')
+    if (pkg.scripts?.preview !== 'ceru-plugin preview ' + (config.output ?? 'dist/plugin.js'))
+      throw new Error(name + '/' + language + ': preview must check the built artifact for desktop use')
     for (const hook of ['preinstall', 'install', 'postinstall', 'prepublish', 'prepare'])
       if (pkg.scripts?.[hook])
         throw new Error('Automatic install hooks are not accepted in templates')
@@ -58,7 +61,7 @@ for (const item of await readdir(join(root, 'plugins'), { withFileTypes: true })
     if (!/\.js$/.test(meta.entry)) throw new Error('Plugin entry must be .js')
     const file = await localFile(dir, meta.entry),
       bytes = await readFile(file)
-    const artifact = readArtifact(bytes)
+    const artifact = (sniffManifestVersion(bytes) === 2 ? legacy : issuer).readArtifact(bytes)
     if (artifact.header.delivery)
       throw new Error('Personalized deliveries must not be submitted publicly')
     if (/-----BEGIN [A-Z ]*PRIVATE KEY-----/.test(bytes.toString('utf8')))

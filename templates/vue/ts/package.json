@@ -6,17 +6,17 @@
   "scripts": {
     "dev": "ceru-plugin dev",
     "build": "ceru-plugin build",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "ceru-plugin typecheck",
     "validate": "ceru-plugin validate dist/plugin.js",
-    "preview": "ceru-plugin preview dist/plugin.js"
+    "preview": "ceru-plugin preview dist/plugin.js",
+    "check:compat": "ceru-plugin check-compat"
   },
   "dependencies": {
-    "@shiqianjiang/ceru-plugin-sdk": "^0.3.15"
+    "@shiqianjiang/ceru-plugin-sdk": "^3.0.0"
   },
   "devDependencies": {
-    "@shiqianjiang/ceru-plugin-cli": "^0.3.15",
+    "@shiqianjiang/ceru-plugin-cli": "^3.0.0",
     "typescript": "~5.9.3",
-    "electron": "^44.4.2",
     "prettier": "^3.6.2",
     "vue": "3.5.43"
   }

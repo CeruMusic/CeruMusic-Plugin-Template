@@ -1,0 +1,95 @@
+{
+  "manifest": {
+    "manifestVersion": 3,
+    "id": "local.encrypted-source-ts",
+    "name": "Encrypted Source (ts)",
+    "version": "0.1.0",
+    "description": "Self-contained AES-CTR, worker WASM transform and local HTTP audio providers",
+    "dataSchemas": {
+      "config": 1,
+      "state": 1
+    },
+    "engines": {
+      "hostApi": "^3.0.0",
+      "logicRuntime": "ceru-js@1"
+    },
+    "entry": {
+      "logic": {
+        "activation": [
+          "onCommand:demo.start",
+          "onProvider:builtin-decrypt",
+          "onProvider:wasm-transform",
+          "onProvider:own-service"
+        ],
+        "module": "logic.main"
+      }
+    },
+    "provides": {
+      "providers": [
+        {
+          "id": "builtin-decrypt",
+          "name": "Encrypted Demo / AES-CTR",
+          "protocols": ["music.search@1", "music.resolve@1", "music.lyrics@1"],
+          "icon": {
+            "kind": "host",
+            "name": "music-note"
+          },
+          "connectionMode": "none"
+        },
+        {
+          "id": "wasm-transform",
+          "name": "Encrypted Demo / WASM XOR",
+          "protocols": ["music.search@1", "music.resolve@1", "music.lyrics@1"],
+          "icon": {
+            "kind": "host",
+            "name": "music-note"
+          },
+          "connectionMode": "none"
+        },
+        {
+          "id": "own-service",
+          "name": "Encrypted Demo / Own Service",
+          "protocols": ["music.search@1", "music.resolve@1", "music.lyrics@1"],
+          "icon": {
+            "kind": "host",
+            "name": "music-note"
+          },
+          "connectionMode": "none"
+        }
+      ],
+      "actions": [
+        {
+          "id": "demo.start",
+          "title": "启动本地音频 Demo"
+        }
+      ]
+    },
+    "uses": {
+      "permissions": [
+        {
+          "key": "demo-server",
+          "name": "network.serve",
+          "reason": "在随机本机端口提供本插件生成的演示音频和密文；不开放局域网访问"
+        },
+        {
+          "key": "demo-transform",
+          "name": "streams.transform",
+          "optional": true,
+          "reason": "仅 WASM XOR 音源需要：在插件 Worker 中将音频字节还原为 WAV"
+        }
+      ]
+    }
+  },
+  "config": {},
+  "entries": {
+    "logic.main": "src/index.ts"
+  },
+  "resources": {
+    "xor-byte": {
+      "type": "base64",
+      "path": "resources/xor-byte.wasm",
+      "mime": "application/wasm"
+    }
+  },
+  "output": "dist/plugin.js"
+}

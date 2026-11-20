@@ -43,19 +43,21 @@ export default definePlugin(async (ctx) => {
             },
             title: track.title,
             subtitle: track.artist,
-            playable: false,
+            playable: !!config.previewUrl,
             metadata: { artists: [track.artist] },
-            capabilities: [],
+            capabilities: config.previewUrl ? ['play'] : [],
           })),
         }
       },
 
-      async resolve() {
-        // 演示不会伪造播放地址。真实解析器返回 { ok: true, url, expiresAt? }。
-        return ctx.playback.failure({
-          code: 'UNSUPPORTED',
-          message: '这是本地搜索 demo，尚未连接真实的音源服务。',
-        })
+      async resolve(ref) {
+        if (config.previewUrl && tracks.some(track => track.id === ref.id))
+          return { ok: true, url: config.previewUrl }
+        return ctx.playback.failure({code:'UNSUPPORTED', message:'请在 previewUrl 配置自己的 HTTP(S) 试听文件。'})
+      },
+      async lyrics(ref) {
+        const track = tracks.find(item => item.id === ref.id)
+        return {format:'crlyric',version:1,track:ref,offsetMs:0,lines:track ? [{startTimeMs:0,text:track.title}] : []}
       },
     },
   })

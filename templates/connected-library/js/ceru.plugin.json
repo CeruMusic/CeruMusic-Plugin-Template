@@ -1,86 +1,158 @@
 {
   "manifest": {
-    "manifestVersion": 2,
+    "manifestVersion": 3,
     "id": "local.js",
     "name": "js",
     "version": "0.1.0",
-    "description": "A Ceru Music v2 connected-library plugin",
-    "engines": {
-      "hostApi": "^2.0.0",
-      "logicRuntime": "ceru-js@1",
-      "uiSchema": "^1.0.0"
+    "description": "A Ceru Music v3 connected-library plugin",
+    "dataSchemas": {
+      "config": 1,
+      "state": 1
     },
-    "modules": {
+    "engines": {
+      "hostApi": "^3.0.0",
+      "logicRuntime": "ceru-js@1"
+    },
+    "entry": {
       "logic": {
-        "entry": "logic.main",
-        "activation": ["onCommand:hello", "onProvider:catalog"]
+        "activation": [
+          "onCommand:hello",
+          "onProvider:catalog"
+        ],
+        "module": "logic.main"
       },
-      "surfaces": [
-        { "id": "library", "kind": "native", "entry": "render.library" },
+      "views": [
+        {
+          "id": "library",
+          "kind": "native",
+          "module": "render.library"
+        },
         {
           "id": "settings",
-          "kind": "schema",
-          "entry": "schema.settings"
+          "kind": "web",
+          "module": "view.settings"
         }
       ]
     },
-    "contributes": {
-      "commands": [
-        { "id": "account.summary", "title": "账号状态", "action": "account.summary" },
-        { "id": "render.library", "title": "渲染音乐库", "action": "render.library" },
-        { "id": "library.open", "title": "打开原生歌单页", "action": "library.open" },
-        { "id": "playlist.open", "title": "打开歌单", "action": "playlist.open" },
-        { "id": "playlist.import", "title": "导入歌单", "action": "playlist.import" },
-        { "id": "track.play", "title": "播放", "action": "track.play" },
-        {
-          "id": "hello",
-          "title": "Hello",
-          "action": "hello"
-        },
-        {
-          "id": "connect",
-          "title": "演示连接",
-          "action": "connection.connect",
-          "view": "settings"
-        }
-      ],
+    "provides": {
       "providers": [
         {
           "id": "catalog",
           "name": "js",
-          "protocols": ["music.search@1", "music.resolve@1", "music.playlists@1"],
+          "protocols": [
+            "music.search@1",
+            "music.resolve@1",
+            "music.playlists@1"
+          ],
           "icon": {
             "kind": "host",
             "name": "music-note"
           },
-          "connectionMode": "multiple"
+          "connectionMode": "multiple",
+          "beforeSelect": "catalog.enter"
         }
       ],
-      "playlistSections": [{ "id": "library", "title": "我的音乐库", "view": "library", "order": 0 }],
-      "accountItems": [{ "id": "catalog", "title": "音乐库账号", "view": "settings", "action": "account.summary" }],
-      "playlistImporters": [{ "id": "catalog", "title": "演示歌单", "providerId": "catalog" }],
-      "settingsPages": [
+      "importers": [
         {
-          "id": "settings",
-          "title": "插件设置",
+          "id": "catalog",
+          "title": "演示歌单",
+          "providerId": "catalog"
+        }
+      ],
+      "actions": [
+        { "id": "catalog.enter", "title": "切入音乐库" },
+        {
+          "id": "account.summary",
+          "title": "账号状态"
+        },
+        {
+          "id": "render.library",
+          "title": "渲染音乐库"
+        },
+        {
+          "id": "library.open",
+          "title": "打开原生歌单页"
+        },
+        {
+          "id": "playlist.open",
+          "title": "打开歌单"
+        },
+        {
+          "id": "playlist.import",
+          "title": "导入歌单"
+        },
+        {
+          "id": "track.play",
+          "title": "播放"
+        },
+        {
+          "id": "hello",
+          "title": "Hello"
+        },
+        {
+          "id": "connection.visible",
+          "title": "判断演示连接状态"
+        },
+        {
+          "id": "connection.connect",
+          "title": "演示连接",
+          "view": "settings"
+        }
+      ],
+      "accounts": [
+        {
+          "id": "catalog",
+          "title": "音乐库账号",
+          "multiple": true,
+          "capabilities": ["profile", "likes", "playlists", "history", "recommend"],
+          "loginMethods": [
+            "form"
+          ],
+          "providers": [
+            "catalog"
+          ],
           "view": "settings"
         }
       ]
     },
-    "permissions": [{ "key": "playback", "name": "player.control", "reason": "使用 Host 的播放器和队列播放音乐库歌曲" }],
-    "dataSchemas": {
-      "config": 1,
-      "state": 1
+    "uses": {
+      "permissions": [
+        {
+          "key": "playback",
+          "name": "player.control",
+          "reason": "使用 Host 的播放器和队列播放音乐库歌曲"
+        }
+      ]
+    },
+    "ui": {
+      "pages": [
+        {
+          "id": "connected",
+          "title": "已连接的音乐库",
+          "view": "library",
+          "mount": "home-tab",
+          "when": { "selectedSource": "catalog", "predicate": "connection.visible" }
+        },
+        {
+          "id": "settings",
+          "title": "插件设置",
+          "view": "settings",
+          "mount": "settings"
+        },
+        {
+          "id": "library",
+          "title": "我的音乐库",
+          "view": "library",
+          "order": 0,
+          "mount": "playlist-section"
+        }
+      ]
     }
   },
   "entries": {
-    "logic.main": "src/index.js"
+    "logic.main": "src/index.js",
+    "view.settings": "src/settings.js"
   },
-  "resources": {
-    "schema.settings": {
-      "path": "ui/settings.json",
-      "type": "json"
-    }
-  },
+  "resources": {},
   "output": "dist/plugin.js"
 }

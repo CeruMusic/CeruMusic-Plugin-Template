@@ -1,0 +1,62 @@
+{
+  "manifest": {
+    "manifestVersion": 3,
+    "id": "local.account-qrcode",
+    "name": "扫码登录演示",
+    "version": "0.1.0",
+    "engines": {
+      "hostApi": "^3.0.0",
+      "logicRuntime": "ceru-js@1"
+    },
+    "entry": {
+      "logic": {
+        "module": "logic.main"
+      },
+      "views": [
+        {
+          "id": "login",
+          "kind": "component",
+          "module": "view.login",
+          "presentation": {
+            "kind": "drawer",
+            "size": 420
+          }
+        },
+        {
+          "id": "login-html",
+          "kind": "web",
+          "module": "view.html",
+          "presentation": {
+            "kind": "drawer",
+            "size": 420
+          }
+        }
+      ]
+    },
+    "provides": {
+      "accounts": [
+        {
+          "id": "demo",
+          "title": "扫码登录演示",
+          "loginMethods": [
+            "qrcode"
+          ],
+          "capabilities": [
+            "profile"
+          ]
+        }
+      ]
+    },
+    "uses": {
+      "permissions": []
+    },
+    "description": "宿主模板与插件自定义登录内容"
+  },
+  "framework": "vue",
+  "entries": {
+    "logic.main": "src/index.js",
+    "view.login": "src/Login.vue",
+    "view.html": "src/login-html.js"
+  },
+  "output": "dist/plugin.js"
+}

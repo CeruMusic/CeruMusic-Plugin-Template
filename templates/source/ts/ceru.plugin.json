@@ -1,34 +1,37 @@
 {
   "manifest": {
-    "manifestVersion": 2,
+    "manifestVersion": 3,
     "id": "local.ts",
     "name": "ts",
     "version": "0.1.0",
-    "description": "A Ceru Music v2 source plugin",
-    "engines": {
-      "hostApi": "^2.0.0",
-      "logicRuntime": "ceru-js@1",
-      "uiSchema": "^1.0.0"
+    "description": "A Ceru Music v3 source plugin",
+    "dataSchemas": {
+      "config": 1,
+      "state": 1
     },
-    "modules": {
+    "engines": {
+      "hostApi": "^3.0.0",
+      "logicRuntime": "ceru-js@1"
+    },
+    "entry": {
       "logic": {
-        "entry": "logic.main",
-        "activation": ["onCommand:hello", "onProvider:catalog"]
+        "activation": [
+          "onCommand:hello",
+          "onProvider:catalog"
+        ],
+        "module": "logic.main"
       }
     },
-    "contributes": {
-      "commands": [
-        {
-          "id": "hello",
-          "title": "Hello",
-          "action": "hello"
-        }
-      ],
+    "provides": {
       "providers": [
         {
           "id": "catalog",
           "name": "ts",
-          "protocols": ["music.search@1", "music.resolve@1"],
+          "protocols": [
+            "music.search@1",
+            "music.resolve@1",
+            "music.lyrics@1"
+          ],
           "icon": {
             "kind": "host",
             "name": "music-note"
@@ -36,20 +39,31 @@
           "connectionMode": "none"
         }
       ],
+      "actions": [
+        {
+          "id": "hello",
+          "title": "Hello"
+        }
+      ]
+    },
+    "uses": {
+      "permissions": []
+    },
+    "ui": {
       "homeSections": [
         {
           "id": "catalog-playlists",
           "title": "歌单",
           "kind": "playlists",
-          "icon": { "kind": "host", "name": "library" },
-          "providerIds": ["catalog"]
+          "icon": {
+            "kind": "host",
+            "name": "library"
+          },
+          "providerIds": [
+            "catalog"
+          ]
         }
       ]
-    },
-    "permissions": [],
-    "dataSchemas": {
-      "config": 1,
-      "state": 1
     }
   },
   "config": {
@@ -58,9 +72,13 @@
     "sources": {
       "demo": {
         "name": "Demo Source",
-        "qualities": ["320k", "flac"]
+        "qualities": [
+          "320k",
+          "flac"
+        ]
       }
-    }
+    },
+    "previewUrl": ""
   },
   "entries": {
     "logic.main": "src/index.ts"

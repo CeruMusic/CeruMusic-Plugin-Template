@@ -1,0 +1,94 @@
+{
+  "manifest": {
+    "manifestVersion": 3,
+    "id": "local.page-extension",
+    "name": "页面扩展",
+    "version": "0.1.0",
+    "engines": {
+      "hostApi": "^3.0.0",
+      "logicRuntime": "ceru-js@1"
+    },
+    "entry": {
+      "logic": {
+        "module": "logic.main"
+      },
+      "views": [
+        {
+          "id": "search",
+          "kind": "component",
+          "module": "view.search",
+          "presentation": { "kind": "drawer", "size": 680 }
+        },
+        {
+          "id": "button",
+          "kind": "component",
+          "module": "view.button"
+        }
+      ]
+    },
+    "provides": {
+      "actions": [
+        {
+          "id": "search",
+          "title": "搜索音源"
+        },
+        {
+          "id": "play",
+          "title": "播放"
+        },
+        { "id": "enqueue", "title": "加入队列" },
+        {
+          "id": "open",
+          "title": "打开搜索页面"
+        }
+      ]
+    },
+    "uses": {
+      "permissions": [
+        {
+          "key": "catalog",
+          "name": "music.read",
+          "reason": "搜索用户选择的音源"
+        },
+        {
+          "key": "listen",
+          "name": "music.control",
+          "reason": "播放用户选择的歌曲或加入播放队列"
+        }
+      ]
+    },
+    "ui": {
+      "pages": [
+        {
+          "id": "search",
+          "title": "音源搜索",
+          "mount": "sidebar",
+          "icon": { "kind": "host", "name": "search" },
+          "group": "library",
+          "view": "search"
+        },
+        {
+          "id": "settings",
+          "title": "音源搜索",
+          "mount": "settings",
+          "view": "search"
+        }
+      ],
+      "slots": [
+        {
+          "id": "search-button",
+          "slot": "playlist.header.actions",
+          "mode": "append",
+          "view": "button"
+        }
+      ]
+    }
+  },
+  "framework": "vue",
+  "entries": {
+    "logic.main": "src/index.js",
+    "view.search": "src/Search.vue",
+    "view.button": "src/Open.vue"
+  },
+  "output": "dist/plugin.js"
+}

@@ -9,6 +9,6 @@ export default definePlugin(async (ctx) => {
     await ctx.ui.setState('page', { status: '页面已关闭' })
   })
   ctx.actions.register('hello', async () => {
-    await ctx.ui.notify({ key: 'hello', level: 'info', message: 'Hello Ceru v2!' })
+    await ctx.ui.notify({ key: 'hello', level: 'info', message: 'Hello Ceru v3!' })
   })
 })

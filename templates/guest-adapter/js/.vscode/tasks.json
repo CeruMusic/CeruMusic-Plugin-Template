@@ -14,14 +14,13 @@
         "background": {
           "activeOnStart": true,
           "beginsPattern": "^.*$",
-          "endsPattern": "^CERU_DEBUG_READY "
+          "endsPattern": "^CERU_BUILD_READY "
         }
       },
       "command": "node",
       "args": [
         "${workspaceFolder}/node_modules/@shiqianjiang/ceru-plugin-cli/dist/bin.js",
-        "dev",
-        "--ensure-running"
+        "dev"
       ],
       "options": {
         "cwd": "${workspaceFolder}"

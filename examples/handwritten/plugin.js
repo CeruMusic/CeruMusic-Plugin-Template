@@ -1,22 +1,24 @@
 exports.manifest = {
-  manifestVersion: 2,
+  manifestVersion: 3,
   id: 'example.handwritten',
   name: '手写单文件示例',
   version: '1.0.0',
   description: '不使用 npm、SDK import 或 CLI 的可见 + 不可见插件',
   engines: {
-    hostApi: '^2.0.0',
+    hostApi: '^3.0.0',
     logicRuntime: 'ceru-js@1',
   },
-  modules: {
-    logic: { entry: 'logic.main' },
-    surfaces: [{ id: 'hello', kind: 'web', entry: 'view.hello' }],
+  entry: {
+    logic: { module: 'logic.main' },
+    views: [{ id: 'hello', kind: 'web', module: 'view.hello' }],
   },
-  contributes: {
-    commands: [{ id: 'open-hello', title: '打开示例', action: 'hello.open' }],
-    sidebarItems: [{ id: 'hello', group: 'tools', title: '手写示例', view: 'hello' }],
+  provides: {
+    actions: [{ id: 'hello.open', title: '打开示例' }],
   },
-  permissions: [],
+  ui: {
+    pages: [{ id: 'hello', mount: 'sidebar', group: 'tools', title: '手写示例', view: 'hello' }],
+  },
+  uses: { permissions: [] },
   dataSchemas: { config: 1, state: 1 },
 }
 

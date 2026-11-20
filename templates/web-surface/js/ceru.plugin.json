@@ -1,27 +1,29 @@
 {
   "manifest": {
-    "manifestVersion": 2,
+    "manifestVersion": 3,
     "id": "local.js",
     "name": "js",
     "version": "0.1.0",
-    "description": "A Ceru Music v2 web-surface plugin",
-    "engines": {
-      "hostApi": "^2.0.0",
-      "logicRuntime": "ceru-js@1",
-      "uiSchema": "^1.0.0"
+    "description": "A Ceru Music v3 web-surface plugin",
+    "dataSchemas": {
+      "config": 1,
+      "state": 1
     },
-    "modules": {
+    "engines": {
+      "hostApi": "^3.0.0",
+      "logicRuntime": "ceru-js@1"
+    },
+    "entry": {
       "logic": {
-        "entry": "logic.main",
         "activation": [
           "onCommand:hello"
-        ]
+        ],
+        "module": "logic.main"
       },
-      "surfaces": [
+      "views": [
         {
           "id": "page",
           "kind": "web",
-          "entry": "view.main",
           "title": "插件页面",
           "presentation": {
             "kind": "drawer",
@@ -31,37 +33,47 @@
           "lifecycle": {
             "openAction": "page.open",
             "closeAction": "page.close"
-          }
+          },
+          "module": "view.main"
         }
       ]
     },
-    "contributes": {
-      "commands": [
+    "provides": {
+      "actions": [
         {
           "id": "hello",
-          "title": "Hello",
-          "action": "hello"
+          "title": "Hello"
         },
         {
           "id": "page.open",
-          "title": "打开页面",
-          "action": "page.open"
+          "title": "打开页面"
         },
         {
           "id": "page.close",
-          "title": "关闭页面",
-          "action": "page.close"
+          "title": "关闭页面"
         }
-      ],
-      "sidebarItems": [
+      ]
+    },
+    "uses": {
+      "permissions": []
+    },
+    "ui": {
+      "pages": [
         {
           "id": "page",
           "group": "library",
           "title": "js",
-          "view": "page"
+          "view": "page",
+          "mount": "sidebar"
+        },
+        {
+          "id": "settings",
+          "title": "插件设置",
+          "view": "page",
+          "mount": "settings"
         }
       ],
-      "uiExtensions": [
+      "slots": [
         {
           "id": "search-note",
           "slot": "search.source-selector.after",
@@ -69,19 +81,7 @@
           "view": "page",
           "order": 10
         }
-      ],
-      "settingsPages": [
-        {
-          "id": "settings",
-          "title": "插件设置",
-          "view": "page"
-        }
       ]
-    },
-    "permissions": [],
-    "dataSchemas": {
-      "config": 1,
-      "state": 1
     }
   },
   "entries": {

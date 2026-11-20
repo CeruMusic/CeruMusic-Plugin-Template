@@ -1,49 +1,54 @@
 {
   "manifest": {
-    "manifestVersion": 2,
+    "manifestVersion": 3,
     "id": "local.js",
     "name": "js",
     "version": "0.1.0",
-    "description": "A Ceru Music v2 react plugin",
-    "engines": {
-      "hostApi": "^2.0.0",
-      "logicRuntime": "ceru-js@1",
-      "uiSchema": "^1.0.0"
+    "description": "A Ceru Music v3 react plugin",
+    "dataSchemas": {
+      "config": 1,
+      "state": 1
     },
-    "modules": {
+    "engines": {
+      "hostApi": "^3.0.0",
+      "logicRuntime": "ceru-js@1"
+    },
+    "entry": {
       "logic": {
-        "entry": "logic.main",
-        "activation": ["onCommand:hello"]
+        "activation": [
+          "onCommand:hello"
+        ],
+        "module": "logic.main"
       },
-      "surfaces": [
+      "views": [
         {
           "id": "page",
           "kind": "web",
-          "entry": "view.main"
+          "module": "view.main"
         }
       ]
     },
-    "contributes": {
-      "commands": [
+    "provides": {
+      "actions": [
         {
           "id": "hello",
-          "title": "Hello",
-          "action": "hello"
+          "title": "Hello"
         }
-      ],
-      "sidebarItems": [
+      ]
+    },
+    "uses": {
+      "permissions": []
+    },
+    "ui": {
+      "pages": [
         {
           "id": "page",
           "group": "library",
           "title": "js",
-          "view": "page"
+          "view": "page",
+          "mount": "sidebar"
         }
       ]
-    },
-    "permissions": [],
-    "dataSchemas": {
-      "config": 1,
-      "state": 1
     }
   },
   "entries": {

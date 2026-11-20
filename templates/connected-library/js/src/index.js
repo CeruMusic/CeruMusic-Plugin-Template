@@ -2,6 +2,46 @@ import { assertResourceRef, defineNativeView, definePlugin } from '@shiqianjiang
 
 export default definePlugin(async (ctx) => {
   let connected = false
+  ctx.actions.register('catalog.enter', async () => {
+    const current = await ctx.accounts.current('catalog')
+    if (current && !current.expired) return true
+    const login = { accountId: 'catalog' }
+    if (current?.expired) Object.assign(login, { connectionId: current.connectionId })
+    return { login }
+  })
+  const accountVisible = async () => {
+    const current = await ctx.accounts.current('catalog')
+    return current !== null && !current.expired
+  }
+  ctx.actions.register('connection.visible', accountVisible)
+  let pendingName = ''
+  const accountTrack=async (connection,label)=>({
+    ref:{pluginId:ctx.plugin.id,providerId:'catalog',kind:'track',id:'demo-track',connectionId:connection},
+    title:String(await ctx.storage.get('demo.account.'+connection))+' · '+label,
+    metadata:{artists:['演示歌手']},capabilities:['play'],
+  })
+  ctx.accounts.register('catalog', {
+    likes:{
+      async list(account){const hidden=await ctx.storage.get('demo.unliked.'+account.id);return {items:hidden?[]:[await accountTrack(account.id,'喜欢的歌曲')]}},
+      async set(account,{ref,liked}){if(ref.id!=='demo-track')throw Error('未知演示歌曲');await ctx.storage.set('demo.unliked.'+account.id,!liked)},
+    },
+    history:{async list(account){return {items:[await accountTrack(account.id,'最近播放')]}}},
+    recommend:{async list(account){return {items:[await accountTrack(account.id,'今日推荐')]}}},
+    playlists:{async list(account){return {items:[{ref:{pluginId:ctx.plugin.id,providerId:'catalog',connectionId:account.id,kind:'playlist',id:'demo'},title:String(await ctx.storage.get('demo.account.'+account.id))+' · 我的歌单',playlist:{trackCount:1},capabilities:['open']}]}}},
+    async login({ auth }) {
+      const values = await auth.form({ fields: [{ key: 'name', label: '演示昵称', type: 'text' }] })
+      pendingName = values?.name.trim().slice(0, 80) || ''
+      if (!pendingName) return null
+      return { credential: 'local-demo:' + pendingName }
+    },
+    async profile(account) {
+      const key = 'demo.account.' + account.id
+      if (pendingName) { await ctx.storage.set(key, pendingName); pendingName = '' }
+      const name = String(await ctx.storage.get(key) || '演示用户')
+      return { id: name, displayName: name }
+    },
+    async logout(account) { await ctx.storage.delete('demo.account.' + account.id);await ctx.storage.delete('demo.unliked.'+account.id) }
+  })
   const playlist = {
     ref: { pluginId: ctx.plugin.id, providerId: 'catalog', connectionId: 'demo', kind: 'playlist', id: 'demo' },
     title: '演示歌单',
@@ -20,10 +60,10 @@ export default definePlugin(async (ctx) => {
   })
   ctx.actions.register('hello', () => ctx.ui.openView('settings'))
   ctx.actions.register('library.open', () => ctx.ui.navigation.open({ page: 'playlist', sectionId: 'library' }))
-  ctx.actions.register('account.summary', () => ({
-    signedIn: connected,
-    displayName: connected ? '演示音乐库' : '连接你的音乐库',
-  }))
+  ctx.actions.register('account.summary', async () => {
+    const signedIn = await accountVisible()
+    return { signedIn, displayName: signedIn ? '演示音乐库' : '连接你的音乐库' }
+  })
   ctx.actions.register('render.library', defineNativeView(() => ({
     type: 'page',
     description: connected ? '演示连接已建立' : '可先浏览演示内容，再接入自己的音乐库 API。',
@@ -67,6 +107,7 @@ export default definePlugin(async (ctx) => {
     if (!['http:', 'https:'].includes(server.protocol)) throw new Error('只支持 HTTP(S) 地址')
 
     connected = true
+    await ctx.entries.invalidate()
     await ctx.ui.setState('library', { connected })
     // 本地 demo 不联网，也不收集密码。真实连接应使用 Host 的凭据与网络 API。
     await ctx.ui.setState('settings', {
@@ -79,7 +120,7 @@ export default definePlugin(async (ctx) => {
 
   ctx.providers.register('catalog', {
     playlists: {
-      async get() { return { name: playlist.title, playlist: playlist.playlist, items: tracks } },
+      async get(_resource,_cursor,operation) { return { name: playlist.title, playlist: playlist.playlist, items: operation.connectionId ? [await accountTrack(operation.connectionId,'歌单歌曲')] : tracks } },
     },
     tracks: {
       async search() {

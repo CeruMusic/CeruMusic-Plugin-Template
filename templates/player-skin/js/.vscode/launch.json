@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Watch Ceru plugin",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/@shiqianjiang/ceru-plugin-cli/dist/bin.js",
+      "args": [
+        "dev"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    }
+  ]
+}
