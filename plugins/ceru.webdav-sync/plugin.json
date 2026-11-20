@@ -1,0 +1,10 @@
+{
+  "id": "ceru.webdav-sync",
+  "name": "音枢歌单同步",
+  "version": "0.3.5",
+  "description": "把澜音歌单接入音枢（Yinshu）歌单同步枢纽，与栖弦、洛雪 LX-X 双向同步：本地增删自动上传，远端增删自动生效；也能和朋友共用一个空间，一起维护同一份歌单。",
+  "author": "Yecho",
+  "license": "MIT",
+  "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/ceru.webdav-sync",
+  "entry": "plugin.js"
+}
