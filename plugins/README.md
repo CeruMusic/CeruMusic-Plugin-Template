@@ -5,8 +5,8 @@
 | 版本 | 订阅索引 | 当前收录 |
 | --- | --- | ---: |
 | v2 | [index.v2.json](index.v2.json) | 7 |
-| v3 | [index.v3.json](index.v3.json) | 1 |
-| 全部 | [index.json](index.json) | 8 |
+| v3 | [index.v3.json](index.v3.json) | 2 |
+| 全部 | [index.json](index.json) | 9 |
 
 订阅时使用对应 JSON 文件的 Raw 地址：
 
@@ -33,6 +33,7 @@
 | 插件 | 版本 | 作者 | 说明 | 源码 |
 | --- | ---: | --- | --- | --- |
 | [网易云账号](v3/ceru.netease-account/README.md) | 1.6.3 | CeruMusic | 宿主账号菜单登录、推荐、歌单、搜索与播放 | 未提供 |
+| [私人漫游 V3](v3/chaochao.roam.v3/README.md) | 0.7.1 | chaochao × DeepSeek | 跨音源推荐、自动续播和曲风探索 | 未提供 |
 
 索引条目的 `source` 指向本投稿页，`sourceCode` 是可选字段，只填写作者自己的公开源码仓库地址，不填写本投稿仓库的成品目录。如果作者未开源或暂未提供仓库，列表显示“未提供”。新投稿会根据构建产物中的 manifest 自动进入对应版本索引。相同插件 ID 的跨版本制品放在 `plugins/v2/` 或 `plugins/v3/` 下，索引保留各自 API 版本。
 
