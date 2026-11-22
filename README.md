@@ -49,13 +49,19 @@ dev/build 还会生成不含配置值的 `@ceru/plugin-config` 类型声明，�
 
 多根工作区或只打开父目录时，VS Code 不会递归发现子工程的 launch.json。请打开创建工程中的 ceru-plugin.code-workspace，选择 Watch Ceru plugin，再按 F5。
 
-## 分享成品插件
+## 社区插件与订阅
 
 你可以：
 
 1. 将公开版插件文件、plugin.json 和 README 提交到 plugins/。
 2. 在自己的仓库发布插件，为仓库添加 ceru-music topic，再提交带固定摘要的下载记录。
 3. 先通过 Issue 介绍插件，再补充 PR。
+
+v2 与 v3 使用独立的订阅索引。将对应的 Raw 地址添加到支持该索引格式的插件订阅器后，刷新索引即可检查版本和 SHA-256 更新。
+
+- v2：`https://raw.githubusercontent.com/CeruMusic/CeruMusic-Plugin-Template/main/plugins/index.v2.json`
+- v3：`https://raw.githubusercontent.com/CeruMusic/CeruMusic-Plugin-Template/main/plugins/index.v3.json`
+- 全部：`https://raw.githubusercontent.com/CeruMusic/CeruMusic-Plugin-Template/main/plugins/index.json`
 
 投稿约定见 [CONTRIBUTING.md](CONTRIBUTING.md)。成品文件会进行静态检查，CI 不运行上传的插件。
 

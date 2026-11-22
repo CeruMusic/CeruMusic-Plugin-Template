@@ -4,7 +4,7 @@
 
 ## 成品插件
 
-创建 plugins/你的插件ID/，放入：
+创建 `plugins/你的插件ID/`，放入：
 
 ```text
 plugins/example.author.plugin/
@@ -12,6 +12,8 @@ plugins/example.author.plugin/
 ├── plugin.js
 └── README.md
 ```
+
+同一插件 ID 需要同时投稿 v2 与 v3 时，保留旧版原目录，并将新增版本放入 `plugins/v2/插件ID/` 或 `plugins/v3/插件ID/`。版本目录必须与制品 manifest 的 API 版本一致。
 
 plugin.json 示例：
 
@@ -28,11 +30,9 @@ plugin.json 示例：
 }
 ```
 
-最后需要在
-plugins/index.json
-添加如上plugin的内容 在 list 中 以加入索引
+索引由 `npm test -- --write-index` 从各插件目录的 `plugin.json` 和成品自动生成，不需要手工维护。CI 会检查提交的索引是否最新。仓库提供 `plugins/index.v2.json`、`plugins/index.v3.json` 两个订阅源和兼容用的 `plugins/index.json` 总索引。各条目包含 API 版本、直接下载 URL 和 SHA-256，插件更新后重新生成并提交索引即可供订阅端检测。
 
-也可以用 download 和 sha256 替代 entry，指向你自己发布的固定版本文件。URL 必须使用 HTTPS；sha256 必须是该文件的 64 位十六进制摘要。CI 只校验远端记录的格式，不自动下载或运行其内容。
+也可以用 `download` 和 `sha256` 替代 `entry`，指向你自己发布的固定版本文件。URL 必须使用 HTTPS；`sha256` 必须是该文件的 64 位十六进制摘要。远端投稿还需要在 `plugin.json` 声明 `apiVersion` 为 `2` 或 `3`。CI 只校验记录格式，不自动下载或运行其内容。
 
 README 应说明：
 
@@ -42,7 +42,7 @@ README 应说明：
 - 是否需要用户自己的账号或凭据。
 - 作者、许可证、源代码/问题反馈地址。
 
-本地提交的文件必须能通过 ceru-plugin validate。暂只将符合 v2 格式的文件加入标准成品索引；其他格式请先讨论对应兼容器和安装要求。
+本地提交的文件必须能通过对应版本的静态校验。v2 与 v3 分别进入独立订阅索引，成品不应跨版本混装或改写 manifest 来迎合另一版本。
 
 不要提交个人化发放文件、密钥、卡密、用户数据、node_modules 或开发缓存。自动扫描不能替代作者和维护者的检查。
 

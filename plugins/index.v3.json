@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "plugins": [
+    {
+      "id": "ceru.netease-account",
+      "name": "网易云账号",
+      "version": "1.6.3",
+      "description": "CeruMusic v3 网易云插件，使用宿主账号菜单和凭据保险箱，提供推荐、歌单、搜索、排行榜及播放能力",
+      "author": "CeruMusic",
+      "license": "MIT",
+      "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/v3/ceru.netease-account",
+      "entry": "plugin.js",
+      "apiVersion": 3,
+      "download": "https://raw.githubusercontent.com/CeruMusic/CeruMusic-Plugin-Template/main/plugins/v3/ceru.netease-account/plugin.js",
+      "sha256": "15a7fcb7b7efafa95034793b52b04c422da8378b7c216b564bbbfaac48b11d57"
+    }
+  ]
+}
