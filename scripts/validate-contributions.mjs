@@ -73,6 +73,11 @@ for (const submission of submissions) {
   const source = new URL(meta.source)
   if (source.protocol !== 'https:' || source.username || source.password)
     throw new Error('Source URL must be HTTPS without credentials')
+  if (meta.sourceCode) {
+    const sourceCode = new URL(meta.sourceCode)
+    if (sourceCode.protocol !== 'https:' || sourceCode.username || sourceCode.password)
+      throw new Error('Source code URL must be HTTPS without credentials')
+  }
   if (!!meta.entry === !!meta.download) throw new Error('Choose entry or download, not both')
   let apiVersion
   let sha256

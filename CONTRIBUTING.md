@@ -1,75 +1,118 @@
 # 投稿指南
 
-欢迎提交新模板、改进示例，也欢迎分享已经完成的插件。
+本仓库接受两类投稿：可直接安装的社区插件成品，以及供 Ceru CLI 创建新工程使用的开发模板。两者分别审核和验证，不要求插件作者开源；作者选择公开源码仓库时，可以在元数据中提供链接。
 
-## 成品插件
+## 投稿流程
 
-创建 `plugins/你的插件ID/`，放入：
+1. 阅读本指南，选择“插件成品”或“CLI 开发模板”。
+2. 复杂或范围较大的投稿先创建对应 Issue，说明计划和兼容目标。小型修复可以直接提交 PR。
+3. 按下文准备文件并在本地运行检查。
+4. 提交 PR，填写 `.github/pull_request_template.md` 中适用于该投稿类型的内容。
+5. 维护者检查目录、兼容信息、许可、权限说明和验证结果。通过审核的 CLI 模板还需由 CLI 维护者同步到发行快照。
+
+Issue 模板用于提前说明投稿内容，不代表已接受或已进入发布。PR 是实际代码和文件变更的评审入口。
+
+## 插件成品
+
+成品插件必须是面向用户安装的构建产物，不需要一并提交完整开发工程。每个插件单独放在 `plugins/<插件ID>/`。当同一个 ID 同时提供 v2 与 v3 时，将新版本放入 `plugins/v2/<插件ID>/` 或 `plugins/v3/<插件ID>/`，保留已有目录。版本目录必须与插件 manifest 的 API 版本相符。
 
 ```text
 plugins/example.author.plugin/
 ├── plugin.json
 ├── plugin.js
-└── README.md
+├── README.md
+└── THIRD_PARTY_NOTICES.md
 ```
 
-同一插件 ID 需要同时投稿 v2 与 v3 时，保留旧版原目录，并将新增版本放入 `plugins/v2/插件ID/` 或 `plugins/v3/插件ID/`。版本目录必须与制品 manifest 的 API 版本一致。
-
-plugin.json 示例：
+`plugin.json` 示例：
 
 ```json
 {
   "id": "example.author.plugin",
   "name": "示例插件",
   "version": "1.0.0",
-  "description": "用一句话说明插件功能",
+  "description": "简要说明插件的实际用途",
   "author": "作者名称",
   "license": "MIT",
-  "source": "https://github.com/example/plugin",
+  "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/example.author.plugin",
+  "sourceCode": "https://github.com/example-author/example-plugin",
   "entry": "plugin.js"
 }
 ```
 
-索引由 `npm test -- --write-index` 从各插件目录的 `plugin.json` 和成品自动生成，不需要手工维护。CI 会检查提交的索引是否最新。仓库提供 `plugins/index.v2.json`、`plugins/index.v3.json` 两个订阅源和兼容用的 `plugins/index.json` 总索引。各条目包含 API 版本、直接下载 URL 和 SHA-256，插件更新后重新生成并提交索引即可供订阅端检测。
+必填字段包括稳定的 `id`、展示名、插件版本、描述、作者、许可证和投稿页 `source`。投稿页用于查看本仓库收录的安装说明和文件。`sourceCode` 是可选字段，只在作者愿意公开源码且已有自己的公开仓库时填写。它应指向对应开发者维护的仓库，不要指向本投稿仓库里的构建产物目录。未开源时省略即可。
 
-也可以用 `download` 和 `sha256` 替代 `entry`，指向你自己发布的固定版本文件。URL 必须使用 HTTPS；`sha256` 必须是该文件的 64 位十六进制摘要。远端投稿还需要在 `plugin.json` 声明 `apiVersion` 为 `2` 或 `3`。CI 只校验记录格式，不自动下载或运行其内容。
+本地成品使用 `entry` 指定 `.js` 文件。也可以使用 `download` 和 `sha256` 指向作者发布的固定版本文件，URL 必须为 HTTPS，SHA-256 必须是 64 位十六进制摘要；远端记录还要声明 `apiVersion` 为 `2` 或 `3`。`entry` 与 `download` 二选一。索引中的 API 版本由本地制品 manifest 识别，不能仅根据目录名或文档推断。
 
-README 应说明：
+README 至少说明：
 
-- 功能和适用场景。
-- 所需 Host/SDK 版本与安装方式。
-- 请求哪些权限、访问哪些服务。
-- 是否需要用户自己的账号或凭据。
-- 作者、许可证、源代码/问题反馈地址。
+- 插件用途、适用场景和用户可见功能。
+- 支持的 CeruMusic Host API、SDK 或桌面版本，以及安装步骤。
+- 请求的权限、访问的网络服务和读取或写入的数据。
+- 是否需要用户自己的账号、Cookie、API Key 或其他凭据，以及凭据保存位置。
+- 作者和许可证、问题反馈地址，以及可选的作者源码仓库链接。
+- 已执行的验证命令和未覆盖的验证范围。
 
-本地提交的文件必须能通过对应版本的静态校验。v2 与 v3 分别进入独立订阅索引，成品不应跨版本混装或改写 manifest 来迎合另一版本。
+同时提交必要的第三方许可证和来源说明。只能发布作者有权分发的文件。不得提交用户账号数据、个人化发放文件、卡密、Cookie、API Key、私钥、`node_modules`、开发缓存或本地工具链包。CI 不下载、不运行插件，也不代表安全背书。
 
-不要提交个人化发放文件、密钥、卡密、用户数据、node_modules 或开发缓存。自动扫描不能替代作者和维护者的检查。
+## CLI 开发模板
 
-## 开发模板
+CLI 模板用于初始化可继续开发的插件工程。模板放在 `templates/<模板ID>/`，通常同时提供 JavaScript 和 TypeScript 版本：
 
-在 templates/模板ID/ 下提供 ts/ 和 js/ 变体。若暂时只支持一种语言，请先在 Issue 讨论。
+```text
+templates/example-template/
+├── js/
+│   ├── ceru.plugin.json
+│   ├── package.json
+│   ├── README.md
+│   └── src/
+└── ts/
+    ├── ceru.plugin.json
+    ├── package.json
+    ├── README.md
+    └── src/
+```
 
-模板需要：
+如果模板确实只适合一种语言，先用 Issue 说明原因和目标用户，再在 PR 中注明支持范围。模板应：
 
-- 一个小而能演示核心用途的 demo，不伪装成已经接入真实商业服务。
-- 清晰的源码、统一换行/缩进、必要注释和 README。
-- TypeScript 类型检查、单文件 build 和静态校验通过。
-- VS Code 配置与本地调试步骤可用。
-- 默认最小权限，不在初始化时暗中联网。
-- 明确依赖的宿主共享库；不把编译器或整个开发工程放入插件。
+- 聚焦一个能运行、能展示核心 API 用法的小示例，不伪装成真实服务接入。
+- 使用仓库当前支持的 manifest、CLI、SDK 和 Core API，明确版本要求及宿主兼容范围。
+- 生成后包含清晰的源码、`README.md`、最小权限配置和必要的 VS Code 调试配置。
+- 默认不在安装或初始化时暗中联网，不执行安装生命周期脚本，不包含真实凭据。
+- 将第三方依赖打入插件成品，说明依赖许可，不要求宿主读取生成项目的 `node_modules`。
+- 提供有效的类型检查、构建、静态校验和预览命令。生成项目必须能按 README 独立安装依赖并完成这些步骤。
+- 将可复用的模板源码提交到 `templates/`，不要提交构建产物、`node_modules`、`.ceru-toolchain`、私钥或开发机缓存。
 
-请在 PR 中记录实际使用的命令及结果。CLI 维护者会把通过检查的模板同步到发行快照。
+模板投稿者应在本地为每个语言版本创建一个临时工程，运行依赖安装、类型检查、测试、构建、插件校验和预览。若模板包含 Electron 宿主交互，还应记录实际做过的宿主验证；没有运行的验证应明确标注。
 
-## 本地检查
+通过审核的模板会由 CLI 维护者同步到 Ceru CLI 的固定发行快照。合入本仓库不等于 CLI 版本已经发布。
+
+## Issue 与 PR
+
+在 GitHub 的 New issue 中选择“社区插件成品投稿”或“CLI 开发模板投稿”。Issue 中提供投稿名称、作者、目标 API 版本或模板 ID、主要用途、权限或依赖、验证计划，以及可选的作者源码仓库。不要在 Issue 或 PR 中粘贴凭据、私钥或用户数据。
+
+PR 标题应说明类型和名称，例如 `plugins: add example.author.plugin v2` 或 `templates: add player utility template`。一个 PR 尽量只处理一个插件、一个模板或一组紧密相关的修复。PR 描述应列出改动内容、兼容目标、实际检查命令和结果、权限或安全影响、需要维护者确认的事项。
+
+插件 PR 还应更新 `plugin.json`、README、许可文件和适用的订阅索引。不要手工编辑生成的 `plugins/index*.json`。运行：
 
 ```bash
-npm install --ignore-scripts
+npm test -- --write-index
 npm test
 ```
 
-这只运行静态投稿检查，不执行成品插件。完整模板构建与 Electron demo 检查由工具链仓库提供。
+模板 PR 应覆盖受影响的 JS/TS 变体，并从生成出来的临时工程验证 README 中承诺的命令。记录每条命令的实际结果，不要只写“已测试”。
+
+维护者可能要求调整目录、兼容声明、权限说明、许可或验证覆盖。合入只表示变更通过仓库审核，不保证插件适用于所有宿主配置，也不表示 CLI 快照已经发布。
+
+## 本地仓库检查
+
+```bash
+npm ci --ignore-scripts
+npm test
+```
+
+仓库级检查只静态校验模板目录和插件投稿元数据，不执行插件成品。每个模板和插件的额外检查见其 README 与所属项目的工具链说明。
 
 ## 社区发现
 
-将 ceru-music topic 添加到自己的插件仓库，可以在 [GitHub topic 页面](https://github.com/topics/ceru-music) 被发现。标签不会自动授予权限、安装插件或跳过投稿评审。
+作者可以给自己的公开插件仓库添加 `ceru-music` topic，便于在 [GitHub topic 页面](https://github.com/topics/ceru-music) 被发现。Topic、仓库收录和有效签名都不代表安全背书，也不会跳过 PR 评审。

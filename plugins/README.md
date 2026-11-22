@@ -18,22 +18,22 @@
 
 ## v2 插件
 
-| 插件 | 版本 | 作者 | 说明 |
-| --- | ---: | --- | --- |
-| [哔哩哔哩音源](ceru.bilibili/README.md) | 1.0.2 | CeruMusic | 搜索、收藏夹、分 P、排行榜、字幕歌词与音频播放 |
-| [洛雪歌单导入](ceru.lx-playlist-import/README.md) | 1.0.0 | CeruMusic | 导入 LX Music 导出的歌单文件 |
-| [Navidrome](ceru.navidrome/README.md) | 1.1.1 | CeruMusic | 接入自建音乐库、歌单、播放与歌词 |
-| [网易云账号](ceru.netease-account/README.md) | 1.2.3 | CeruMusic | 扫码登录、每日推荐与个人歌单 |
-| [音枢歌单同步](ceru.webdav-sync/README.md) | 0.3.5 | Yecho | 与音枢及其他客户端双向同步歌单 |
-| [私人漫游](chaochao.roam/README.md) | 0.2.0 | chaochao × DeepSeek | 根据当前播放歌曲推荐并自动续播 |
-| [波点音乐](lemon.bodian-account/README.md) | 1.7.0 | lemon | 账号、音源、歌单同步与私人推荐 |
+| 插件 | 版本 | 作者 | 说明 | 源码 |
+| --- | ---: | --- | --- | --- |
+| [哔哩哔哩音源](ceru.bilibili/README.md) | 1.0.2 | CeruMusic | 搜索、收藏夹、分 P、排行榜、字幕歌词与音频播放 | 未提供 |
+| [洛雪歌单导入](ceru.lx-playlist-import/README.md) | 1.0.0 | CeruMusic | 导入 LX Music 导出的歌单文件 | 未提供 |
+| [Navidrome](ceru.navidrome/README.md) | 1.1.1 | CeruMusic | 接入自建音乐库、歌单、播放与歌词 | 未提供 |
+| [网易云账号](ceru.netease-account/README.md) | 1.2.3 | CeruMusic | 扫码登录、每日推荐与个人歌单 | 未提供 |
+| [音枢歌单同步](ceru.webdav-sync/README.md) | 0.3.5 | Yecho | 与音枢及其他客户端双向同步歌单 | 未提供 |
+| [私人漫游](chaochao.roam/README.md) | 0.2.0 | chaochao × DeepSeek | 根据当前播放歌曲推荐并自动续播 | 未提供 |
+| [波点音乐](lemon.bodian-account/README.md) | 1.7.0 | lemon | 账号、音源、歌单同步与私人推荐 | 暂无 |
 
 ## v3 插件
 
-| 插件 | 版本 | 作者 | 说明 |
-| --- | ---: | --- | --- |
-| [网易云账号](v3/ceru.netease-account/README.md) | 1.6.3 | CeruMusic | 宿主账号菜单登录、推荐、歌单、搜索与播放 |
+| 插件 | 版本 | 作者 | 说明 | 源码 |
+| --- | ---: | --- | --- | --- |
+| [网易云账号](v3/ceru.netease-account/README.md) | 1.6.3 | CeruMusic | 宿主账号菜单登录、推荐、歌单、搜索与播放 | 未提供 |
 
-新投稿会根据构建产物中的 manifest 自动进入对应版本索引。相同插件 ID 的跨版本制品放在 `plugins/v2/` 或 `plugins/v3/` 下，索引保留各自 API 版本。
+索引条目的 `source` 指向本投稿页，`sourceCode` 是可选字段，只填写作者自己的公开源码仓库地址，不填写本投稿仓库的成品目录。如果作者未开源或暂未提供仓库，列表显示“未提供”。新投稿会根据构建产物中的 manifest 自动进入对应版本索引。相同插件 ID 的跨版本制品放在 `plugins/v2/` 或 `plugins/v3/` 下，索引保留各自 API 版本。
 
 每个插件使用独立目录，包含 `plugin.json`、`README.md` 和公开版 JavaScript 文件，也可以提供 HTTPS 下载地址及 SHA-256。投稿规则见 [CONTRIBUTING.md](../CONTRIBUTING.md)。不得提交个人卡密、激活信息或私钥；CI 只进行静态校验，不运行插件。
