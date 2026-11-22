@@ -5,6 +5,6 @@
   "description": "B站搜索、收藏夹、分P、排行榜、字幕歌词与音频播放，支持Cookie及扫码登录",
   "author": "CeruMusic",
   "license": "MIT",
-  "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/ceru.bilibili",
+  "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/v2/ceru.bilibili",
   "entry": "plugin.js"
 }

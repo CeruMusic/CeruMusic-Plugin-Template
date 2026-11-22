@@ -49,15 +49,21 @@ dev/build 还会生成不含配置值的 `@ceru/plugin-config` 类型声明，�
 
 多根工作区或只打开父目录时，VS Code 不会递归发现子工程的 launch.json。请打开创建工程中的 ceru-plugin.code-workspace，选择 Watch Ceru plugin，再按 F5。
 
-## 分享成品插件
+## 投稿插件与 CLI 模板
 
-你可以：
+本仓库接受已构建的插件成品和供 Ceru CLI 创建工程使用的开发模板。成品插件订阅地址与列表见 [社区插件目录](plugins/README.md)。
 
-1. 将公开版插件文件、plugin.json 和 README 提交到 plugins/。
-2. 在自己的仓库发布插件，为仓库添加 ceru-music topic，再提交带固定摘要的下载记录。
-3. 先通过 Issue 介绍插件，再补充 PR。
+投稿前可使用 GitHub Issue 模板说明插件功能或模板目标，再通过 PR 提交文件和验证结果。Issue 和 PR 模板分别用于两类投稿。
 
-投稿约定见 [CONTRIBUTING.md](CONTRIBUTING.md)。成品文件会进行静态检查，CI 不运行上传的插件。
+作者可以自行决定是否开源。开源时，在插件 `plugin.json` 的 `sourceCode` 字段填写开发者自己维护的源码仓库地址；该字段可省略，不能用本投稿仓库里的构建产物目录替代作者仓库。
+
+v2 与 v3 使用独立的订阅索引。将对应的 Raw 地址添加到支持该索引格式的插件订阅器后，刷新索引即可检查版本和 SHA-256 更新。
+
+- v2：`https://raw.githubusercontent.com/CeruMusic/CeruMusic-Plugin-Template/main/plugins/index.v2.json`
+- v3：`https://raw.githubusercontent.com/CeruMusic/CeruMusic-Plugin-Template/main/plugins/index.v3.json`
+- 全部：`https://raw.githubusercontent.com/CeruMusic/CeruMusic-Plugin-Template/main/plugins/index.json`
+
+投稿约定见 [CONTRIBUTING.md](CONTRIBUTING.md)。成品文件会进行静态检查，CI 不运行上传的插件。通过评审的 CLI 模板还需由 CLI 维护者同步到发行快照。
 
 不要上传包含个人卡密、激活码、API Key 或私钥的个性化发行文件。公开版本应让安装者配置自己的连接与凭据。
 

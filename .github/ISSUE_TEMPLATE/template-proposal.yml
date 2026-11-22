@@ -1,16 +1,59 @@
-name: 新模板提案
-description: 提议或贡献插件开发模板
-title: "[模板提案] "
+name: CLI 开发模板提案 / 投稿
+description: 提议或提交供 Ceru CLI 初始化工程使用的模板
+title: 'templates: '
 body:
-  - type: textarea
-    id: usecase
+  - type: markdown
     attributes:
-      label: 希望解决的开发场景
+      value: |
+        用此 Issue 讨论或登记 CLI 开发模板。实际模板文件和变更通过 Pull Request 提交。请勿附带私钥、凭据或开发机缓存。
+  - type: input
+    id: template_id
+    attributes:
+      label: 模板 ID
+      placeholder: player-utility
     validations:
       required: true
   - type: textarea
-    id: design
+    id: purpose
     attributes:
-      label: 框架、语言、demo 和验证方案
+      label: 模板目标与示例功能
+      description: 说明使用者创建的是什么工程，以及示例展示哪些 API。
     validations:
       required: true
+  - type: checkboxes
+    id: languages
+    attributes:
+      label: 语言变体
+      options:
+        - label: JavaScript
+          required: false
+        - label: TypeScript
+          required: false
+  - type: input
+    id: api_compatibility
+    attributes:
+      label: Ceru CLI、SDK 与 Host API 兼容目标
+      placeholder: CLI 版本范围、SDK 范围、Host API v3
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: 权限、联网行为与依赖
+      description: 说明默认权限、初始化或安装时是否联网、运行时服务和第三方依赖。
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: 生成工程的验证结果
+      description: 列出 JS/TS 版本的安装、类型检查、测试、构建、校验和预览命令。
+    validations:
+      required: true
+  - type: input
+    id: source_repository
+    attributes:
+      label: 作者源码仓库 URL（可选）
+      placeholder: https://github.com/author/template-source
+    validations:
+      required: false

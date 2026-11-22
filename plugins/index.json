@@ -2,34 +2,17 @@
   "schemaVersion": 1,
   "plugins": [
     {
-      "id": "chaochao.roam",
-      "name": "私人漫游",
-      "version": "0.2.0",
-      "description": "基于当前播放的歌曲不断推荐相似作品，队列快放完时自动续歌，像网易云私人漫游一样可以一直听下去",
-      "author": "chaochao × DeepSeek",
-      "license": "MIT",
-      "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/chaochao.roam",
-      "entry": "plugin.js"
-    },
-    {
-      "id": "chaochao.roam.v3",
-      "name": "私人漫游 V3",
-      "version": "0.7.1",
-      "description": "v3 插件：以当前播放的歌为种子，在已启用的多个音乐源之间持续推荐，队列快放完时自动补歌，跨平台混推、曲风权重 43 类、探索度、每日 30 首",
-      "author": "chaochao × DeepSeek",
-      "license": "MIT",
-      "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/chaochao.roam.v3",
-      "entry": "plugin.js"
-    },
-    {
       "id": "ceru.bilibili",
       "name": "哔哩哔哩音源",
       "version": "1.0.2",
       "description": "B站搜索、收藏夹、分P、排行榜、字幕歌词与音频播放，支持Cookie及扫码登录",
       "author": "CeruMusic",
       "license": "MIT",
-      "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/ceru.bilibili",
-      "entry": "plugin.js"
+      "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/v2/ceru.bilibili",
+      "entry": "plugin.js",
+      "apiVersion": 2,
+      "download": "https://raw.githubusercontent.com/CeruMusic/CeruMusic-Plugin-Template/main/plugins/v2/ceru.bilibili/plugin.js",
+      "sha256": "5d05379380151c73f39cdf2ae8ae02ca40f5c93634429311c174032f4594faa7"
     },
     {
       "id": "ceru.lx-playlist-import",
@@ -38,8 +21,11 @@
       "description": "读取洛雪音乐（LX Music）导出的 .json / .lxmc 歌单文件，解析后导入澜音本地歌单",
       "author": "CeruMusic",
       "license": "MIT",
-      "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/ceru.lx-playlist-import",
-      "entry": "plugin.js"
+      "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/v2/ceru.lx-playlist-import",
+      "entry": "plugin.js",
+      "apiVersion": 2,
+      "download": "https://raw.githubusercontent.com/CeruMusic/CeruMusic-Plugin-Template/main/plugins/v2/ceru.lx-playlist-import/plugin.js",
+      "sha256": "261d5cd8263178d1d9f9b2937210a0ac42ff4dd665ebf62d9a5a4fe5f602a5ff"
     },
     {
       "id": "ceru.navidrome",
@@ -48,8 +34,11 @@
       "description": "将自己的 Navidrome 音乐库接入澜音搜索、歌单、播放与歌词",
       "author": "CeruMusic",
       "license": "MIT",
-      "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/ceru.navidrome",
-      "entry": "plugin.js"
+      "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/v2/ceru.navidrome",
+      "entry": "plugin.js",
+      "apiVersion": 2,
+      "download": "https://raw.githubusercontent.com/CeruMusic/CeruMusic-Plugin-Template/main/plugins/v2/ceru.navidrome/plugin.js",
+      "sha256": "6aed1de677c365e3291f5a3debf27257f92a0e843927508fea9ca7568b2d05a3"
     },
     {
       "id": "ceru.netease-account",
@@ -58,8 +47,24 @@
       "description": "扫码登录网易云，访问每日推荐、个人歌单，并按账号权限播放音乐",
       "author": "CeruMusic",
       "license": "MIT",
-      "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/ceru.netease-account",
-      "entry": "plugin.js"
+      "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/v2/ceru.netease-account",
+      "entry": "plugin.js",
+      "apiVersion": 2,
+      "download": "https://raw.githubusercontent.com/CeruMusic/CeruMusic-Plugin-Template/main/plugins/v2/ceru.netease-account/plugin.js",
+      "sha256": "1a131adc02b60dad4282f15d5906f1d019fe17257aa7d1e7189703471235649e"
+    },
+    {
+      "id": "ceru.netease-account",
+      "name": "网易云账号",
+      "version": "1.6.3",
+      "description": "CeruMusic v3 网易云插件，使用宿主账号菜单和凭据保险箱，提供推荐、歌单、搜索、排行榜及播放能力",
+      "author": "CeruMusic",
+      "license": "MIT",
+      "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/v3/ceru.netease-account",
+      "entry": "plugin.js",
+      "apiVersion": 3,
+      "download": "https://raw.githubusercontent.com/CeruMusic/CeruMusic-Plugin-Template/main/plugins/v3/ceru.netease-account/plugin.js",
+      "sha256": "15a7fcb7b7efafa95034793b52b04c422da8378b7c216b564bbbfaac48b11d57"
     },
     {
       "id": "ceru.webdav-sync",
@@ -68,8 +73,50 @@
       "description": "把澜音歌单接入音枢（Yinshu）歌单同步枢纽，与栖弦、洛雪 LX-X 双向同步：本地增删自动上传，远端增删自动生效；也能和朋友共用一个空间，一起维护同一份歌单。",
       "author": "Yecho",
       "license": "MIT",
-      "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/ceru.webdav-sync",
-      "entry": "plugin.js"
+      "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/v2/ceru.webdav-sync",
+      "entry": "plugin.js",
+      "apiVersion": 2,
+      "download": "https://raw.githubusercontent.com/CeruMusic/CeruMusic-Plugin-Template/main/plugins/v2/ceru.webdav-sync/plugin.js",
+      "sha256": "06f8f5ff783539fcfcb8e0d4a7034acf2a8b638400d85bd475164d170e5c44b0"
+    },
+    {
+      "id": "chaochao.roam",
+      "name": "私人漫游",
+      "version": "0.2.0",
+      "description": "基于当前播放的歌曲不断推荐相似作品，队列快放完时自动续歌，像网易云私人漫游一样可以一直听下去",
+      "author": "chaochao × DeepSeek",
+      "license": "MIT",
+      "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/v2/chaochao.roam",
+      "entry": "plugin.js",
+      "apiVersion": 2,
+      "download": "https://raw.githubusercontent.com/CeruMusic/CeruMusic-Plugin-Template/main/plugins/v2/chaochao.roam/plugin.js",
+      "sha256": "9bfdd71051a62e4bcbe018d803d604c2fb42ab82ec51fd8d12cd00c1cffa7ed9"
+    },
+    {
+      "id": "chaochao.roam.v3",
+      "name": "私人漫游 V3",
+      "version": "0.7.1",
+      "description": "v3 插件：以当前播放的歌为种子，在已启用的多个音乐源之间持续推荐，队列快放完时自动补歌，跨平台混推、曲风权重 43 类、探索度、每日 30 首",
+      "author": "chaochao × DeepSeek",
+      "license": "MIT",
+      "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/v3/chaochao.roam.v3",
+      "entry": "plugin.js",
+      "apiVersion": 3,
+      "download": "https://raw.githubusercontent.com/CeruMusic/CeruMusic-Plugin-Template/main/plugins/v3/chaochao.roam.v3/plugin.js",
+      "sha256": "ccb9d395cf9d0ba2131caa4ca6f25cb9b4ab61e809ba81b23e2420c458d5abd2"
+    },
+    {
+      "id": "lemon.bodian-account",
+      "name": "波点音乐",
+      "version": "1.7.0",
+      "description": "澜音 v2 插件：波点音乐账号（扫码 / 手机号）与音源，支持搜索、播放、歌词、歌单同步、私人推荐电台、发现页歌单 / 排行榜 / 个性化推荐与歌曲评论",
+      "author": "lemon",
+      "license": "MIT",
+      "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/v2/lemon.bodian-account",
+      "entry": "plugin.js",
+      "apiVersion": 2,
+      "download": "https://raw.githubusercontent.com/CeruMusic/CeruMusic-Plugin-Template/main/plugins/v2/lemon.bodian-account/plugin.js",
+      "sha256": "c6bc351e35d6d026d0701c7f731da4433c49e9b2eafa6d1574db8357a6802447"
     }
   ]
 }

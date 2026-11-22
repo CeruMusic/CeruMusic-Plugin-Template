@@ -3,7 +3,7 @@
 仿网易云「私人漫游」的 **v3 版本**：以当前正在播放的歌为种子，在你已启用的**多个音乐源**之间持续推荐，队列快放完时自动补歌，可以一直听下去。
 
 > 这是 v3 插件（`manifestVersion: 3`，`hostApi ^3.0.0`，面向澜音 2.5+）。
-> v2 版本仍在 `plugins/chaochao.roam/`，两者互不覆盖、可同时安装。
+> v2 版本仍在 `plugins/v2/chaochao.roam/`，两者互不覆盖、可同时安装。
 
 - 单文件插件，`plugin.js` 直接安装，无需构建
 - 版本 0.7.1 · MIT · 作者 chaochao × DeepSeek

@@ -88,4 +88,4 @@
 
 - 作者：chaochao × DeepSeek
 - 许可：MIT
-- 问题反馈 / 源码：https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/chaochao.roam
+- 问题反馈 / 投稿页：https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/v2/chaochao.roam
