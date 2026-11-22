@@ -20,13 +20,13 @@
 
 | 插件 | 版本 | 作者 | 说明 | 源码 |
 | --- | ---: | --- | --- | --- |
-| [哔哩哔哩音源](ceru.bilibili/README.md) | 1.0.2 | CeruMusic | 搜索、收藏夹、分 P、排行榜、字幕歌词与音频播放 | 未提供 |
-| [洛雪歌单导入](ceru.lx-playlist-import/README.md) | 1.0.0 | CeruMusic | 导入 LX Music 导出的歌单文件 | 未提供 |
-| [Navidrome](ceru.navidrome/README.md) | 1.1.1 | CeruMusic | 接入自建音乐库、歌单、播放与歌词 | 未提供 |
-| [网易云账号](ceru.netease-account/README.md) | 1.2.3 | CeruMusic | 扫码登录、每日推荐与个人歌单 | 未提供 |
-| [音枢歌单同步](ceru.webdav-sync/README.md) | 0.3.5 | Yecho | 与音枢及其他客户端双向同步歌单 | 未提供 |
-| [私人漫游](chaochao.roam/README.md) | 0.2.0 | chaochao × DeepSeek | 根据当前播放歌曲推荐并自动续播 | 未提供 |
-| [波点音乐](lemon.bodian-account/README.md) | 1.7.0 | lemon | 账号、音源、歌单同步与私人推荐 | 暂无 |
+| [哔哩哔哩音源](v2/ceru.bilibili/README.md) | 1.0.2 | CeruMusic | 搜索、收藏夹、分 P、排行榜、字幕歌词与音频播放 | 未提供 |
+| [洛雪歌单导入](v2/ceru.lx-playlist-import/README.md) | 1.0.0 | CeruMusic | 导入 LX Music 导出的歌单文件 | 未提供 |
+| [Navidrome](v2/ceru.navidrome/README.md) | 1.1.1 | CeruMusic | 接入自建音乐库、歌单、播放与歌词 | 未提供 |
+| [网易云账号](v2/ceru.netease-account/README.md) | 1.2.3 | CeruMusic | 扫码登录、每日推荐与个人歌单 | 未提供 |
+| [音枢歌单同步](v2/ceru.webdav-sync/README.md) | 0.3.5 | Yecho | 与音枢及其他客户端双向同步歌单 | 未提供 |
+| [私人漫游](v2/chaochao.roam/README.md) | 0.2.0 | chaochao × DeepSeek | 根据当前播放歌曲推荐并自动续播 | 未提供 |
+| [波点音乐](v2/lemon.bodian-account/README.md) | 1.7.0 | lemon | 账号、音源、歌单同步与私人推荐 | 未提供 |
 
 ## v3 插件
 

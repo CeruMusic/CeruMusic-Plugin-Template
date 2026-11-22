@@ -48,8 +48,8 @@ const plugins = []
 const pluginRoot = join(root, 'plugins')
 const submissions = []
 for (const item of await readdir(pluginRoot, { withFileTypes: true })) {
-  if (!item.isDirectory() || ['v2', 'v3'].includes(item.name)) continue
-  submissions.push({ id: item.name, dir: join(pluginRoot, item.name) })
+  if (item.isDirectory() && !['v2', 'v3'].includes(item.name))
+    throw new Error('Plugin submissions must be stored under plugins/v2 or plugins/v3')
 }
 for (const apiVersion of [2, 3]) {
   const versionRoot = join(pluginRoot, 'v' + apiVersion)
@@ -100,8 +100,8 @@ for (const submission of submissions) {
     )
       throw new Error('Manifest and catalog metadata differ')
   } else {
-    if (![2, 3].includes(meta.apiVersion))
-      throw new Error('Remote records must declare apiVersion 2 or 3')
+    if (![2, 3].includes(meta.apiVersion) || meta.apiVersion !== submission.expectedApiVersion)
+      throw new Error('Remote record apiVersion must match its version directory')
     apiVersion = meta.apiVersion
     sha256 = meta.sha256
     const download = new URL(meta.download)

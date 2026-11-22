@@ -14,10 +14,10 @@ Issue 模板用于提前说明投稿内容，不代表已接受或已进入发�
 
 ## 插件成品
 
-成品插件必须是面向用户安装的构建产物，不需要一并提交完整开发工程。每个插件单独放在 `plugins/<插件ID>/`。当同一个 ID 同时提供 v2 与 v3 时，将新版本放入 `plugins/v2/<插件ID>/` 或 `plugins/v3/<插件ID>/`，保留已有目录。版本目录必须与插件 manifest 的 API 版本相符。
+成品插件必须是面向用户安装的构建产物，不需要一并提交完整开发工程。**所有插件都必须放在对应 API 版本目录中**：v2 放 `plugins/v2/<插件ID>/`，v3 放 `plugins/v3/<插件ID>/`。不要在 `plugins/` 根目录放单个插件。即使插件只支持一个 API 版本，也必须使用版本目录。若同一 ID 同时提供 v2 和 v3，两种制品分别放在两个目录中。目录版本必须与插件 manifest 的 API 版本相符。
 
 ```text
-plugins/example.author.plugin/
+plugins/v2/example.author.plugin/
 ├── plugin.json
 ├── plugin.js
 ├── README.md
@@ -34,7 +34,7 @@ plugins/example.author.plugin/
   "description": "简要说明插件的实际用途",
   "author": "作者名称",
   "license": "MIT",
-  "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/example.author.plugin",
+  "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/v2/example.author.plugin",
   "sourceCode": "https://github.com/example-author/example-plugin",
   "entry": "plugin.js"
 }
@@ -93,7 +93,7 @@ templates/example-template/
 
 PR 标题应说明类型和名称，例如 `plugins: add example.author.plugin v2` 或 `templates: add player utility template`。一个 PR 尽量只处理一个插件、一个模板或一组紧密相关的修复。PR 描述应列出改动内容、兼容目标、实际检查命令和结果、权限或安全影响、需要维护者确认的事项。
 
-插件 PR 还应更新 `plugin.json`、README、许可文件和适用的订阅索引。不要手工编辑生成的 `plugins/index*.json`。运行：
+插件 PR 还应更新对应版本目录中的 `plugin.json`、README、许可文件和插件目录页。不要手工编辑生成的 `plugins/index*.json`。运行：
 
 ```bash
 npm test -- --write-index

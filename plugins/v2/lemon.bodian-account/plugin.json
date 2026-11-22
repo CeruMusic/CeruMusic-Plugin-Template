@@ -1,0 +1,10 @@
+{
+  "id": "lemon.bodian-account",
+  "name": "波点音乐",
+  "version": "1.7.0",
+  "description": "澜音 v2 插件：波点音乐账号（扫码 / 手机号）与音源，支持搜索、播放、歌词、歌单同步、私人推荐电台、发现页歌单 / 排行榜 / 个性化推荐与歌曲评论",
+  "author": "lemon",
+  "license": "MIT",
+  "source": "https://github.com/CeruMusic/CeruMusic-Plugin-Template/tree/main/plugins/v2/lemon.bodian-account",
+  "entry": "plugin.js"
+}
