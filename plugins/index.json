@@ -95,7 +95,7 @@
     {
       "id": "chaochao.roam.v3",
       "name": "私人漫游 V3",
-      "version": "0.7.2",
+      "version": "0.7.3",
       "description": "v3 插件：以当前播放的歌为种子，在已启用的多个音乐源之间持续推荐，队列快放完时自动补歌，跨平台混推、曲风权重 43 类、探索度、每日 30 首",
       "author": "chaochao × DeepSeek",
       "license": "MIT",
@@ -103,7 +103,7 @@
       "entry": "plugin.js",
       "apiVersion": 3,
       "download": "https://raw.githubusercontent.com/CeruMusic/CeruMusic-Plugin-Template/main/plugins/v3/chaochao.roam.v3/plugin.js",
-      "sha256": "9a9d180f0af1720ddb28b6c51318541f2e49c87227cfb2d18becd0a40d452a40"
+      "sha256": "b1643b0a97393d0a3de2405da902f0a681e29897ee90dd1e6f09eb536b437c34"
     },
     {
       "id": "lemon.bodian-account",

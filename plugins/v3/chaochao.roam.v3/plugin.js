@@ -2,7 +2,7 @@ exports.manifest = {
   manifestVersion: 3,
   id: "chaochao.roam.v3",
   name: "私人漫游 V3",
-  version: "0.7.2",
+  version: "0.7.3",
   description: "像私人漫游一样，基于当前播放的歌曲在不同音乐源之间持续推荐，队列快放完时自动续歌，可以一直听下去。",
   author: "DeepSeek × chaochao",
   dataSchemas: { config: 1, state: 1 },
@@ -368,12 +368,15 @@ function sanitizeConfig(raw) {
   out.sources = sources;
 
   var genres = {};
-  var gSrc = src.genres && typeof src.genres === "object" ? src.genres : R.cfg.genres;
+  /* 注意：用户可能把权重全部清零（存成 {}），这时绝不能回落到默认权重，
+     只有「配置里根本没有 genres 字段」才用默认值 */
+  var hasGenres = !!src.genres && typeof src.genres === "object";
+  var gSrc = hasGenres ? src.genres : R.cfg.genres;
   var gKeys = Object.keys(gSrc);
   for (var j = 0; j < gKeys.length; j++) {
     genres[gKeys[j]] = clamp(gSrc[gKeys[j]], 0, 100);
   }
-  out.genres = gKeys.length ? genres : R.cfg.genres;
+  out.genres = hasGenres ? genres : R.cfg.genres;
   return out;
 }
 
@@ -2646,7 +2649,7 @@ function ViewHelp(ui) {
   wrap.className = "wrap";
   wrap.innerHTML = [
     "<h1>私人漫游 · 使用说明</h1>",
-    '<div class="sub">v0.7.2 · 跨平台无限续播：以当前播放的歌为起点，在已启用的音乐源之间持续推荐，队列快放完时自动补歌</div>',
+    '<div class="sub">v0.7.3 · 跨平台无限续播：以当前播放的歌为起点，在已启用的音乐源之间持续推荐，队列快放完时自动补歌</div>',
 
     "<h2>这个插件做什么</h2>",
     "<p>私人漫游只负责「推什么歌」，不提供音源、不登录账号、不下载文件。它把你已安装的音乐源插件（QQ 音乐、网易云、酷狗、酷我、咪咕、汽水、Apple Music 等）当作候选池，按「像不像当前这首」打分挑歌，把结果写进播放队列。</p>",
