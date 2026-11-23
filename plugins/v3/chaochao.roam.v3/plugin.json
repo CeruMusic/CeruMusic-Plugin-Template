@@ -1,7 +1,7 @@
 {
   "id": "chaochao.roam.v3",
   "name": "私人漫游 V3",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "v3 插件：以当前播放的歌为种子，在已启用的多个音乐源之间持续推荐，队列快放完时自动补歌，跨平台混推、曲风权重 43 类、探索度、每日 30 首",
   "author": "chaochao × DeepSeek",
   "license": "MIT",
